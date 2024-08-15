@@ -1,0 +1,13 @@
+@use '../../styles/variables.scss';
+
+.dropdown-menu {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+
+    &__item {
+        padding: 8px 0 8px 32px;
+        color: variables.$gray-500;
+        font-size: 14px;
+    }
+}
