@@ -4,6 +4,7 @@ import styles from './Header.module.scss';
 import Icons from '../Icons';
 import clsx from 'clsx';
 import DropDownMenu from '../DropdownMenu/DropDownMenu';
+import useResponsive from '@/hooks/useResponsive';
 
 const menuList = [
   {
@@ -64,36 +65,65 @@ const menuList = [
 
 export default function Header() {
   const [showMenu, setShowMenu] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string>();
+  const screenSize = useResponsive();
 
   const handleShowMenu = () => {
     setShowMenu(!showMenu);
   };
 
   useEffect(() => {
-    if (!showMenu) {
-      setActiveDropdown(undefined);
+    if (screenSize === 'xl') {
+      setShowMenu(false);
     }
-  }, [showMenu]);
+  }, [screenSize]);
 
   return (
     <Fragment>
       <header className={styles.header}>
-        <div className={styles.header__icon} onClick={handleShowMenu} role="button" tabIndex={0}>
+        <div
+          className={clsx(styles.header__icon, styles['header__menu-icon'])}
+          onClick={handleShowMenu}
+          role="button"
+          tabIndex={0}
+        >
           <Icons.Menu />
+        </div>
+
+        <div className={styles['header__right-nav']}>
+          <div className={styles['nav-menu']}>
+            {menuList.map((item) => {
+              if (item.items) {
+                return (
+                  <DropDownMenu
+                    key={item.title}
+                    className={styles['nav-menu__item']}
+                    title={item.title}
+                    items={item.items}
+                    isPopup
+                  />
+                );
+              }
+              return (
+                <div key={item.title} className={styles['nav-menu__item']}>
+                  {item.title}
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         <h1 className={styles.header__title}>Cineverse</h1>
 
         <div className={styles['header__left-icons']}>
-          <div className={styles.header__icon}>
-            <Icons.MapPin />
+          <div className={styles['header__icon-wrapper']}>
+            <Icons.MapPin className={styles.header__icon} />
           </div>
-          <div className={styles.header__icon}>
-            <Icons.QuestionMarkCircle />
+          <div className={styles['header__icon-wrapper']}>
+            <Icons.QuestionMarkCircle className={styles.header__icon} />
+            <span className={styles['show_label']}>Hỗ trợ</span>
           </div>
-          <div className={styles.header__icon}>
-            <Icons.User />
+          <div className={styles['header__icon-wrapper']}>
+            <Icons.User className={styles.header__icon} />
           </div>
         </div>
       </header>
@@ -108,8 +138,6 @@ export default function Header() {
                   className={styles['nav-menu__item']}
                   title={item.title}
                   items={item.items}
-                  isOpen={activeDropdown === item.title}
-                  onToggle={() => setActiveDropdown(item.title === activeDropdown ? undefined : item.title)}
                 />
               );
             }
