@@ -1,9 +1,10 @@
 'use client';
+import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 
 export default function Home() {
   return (
-    <section className="bg-gray-100">
+    <section>
       <Header />
       <div className="mt-3">
         hello world
@@ -16,6 +17,7 @@ export default function Home() {
           hello
         </button>
       </div>
+      <Footer />
     </section>
   );
 }
