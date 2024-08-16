@@ -12,12 +12,15 @@ const useResponsive = () => {
   const [screenSize, setScreenSize] = useState(getScreenSize());
 
   function getScreenSize() {
-    const width = window.innerWidth;
-    if (width < breakpoints.sm) return 'xs'; // Extra small
-    if (width < breakpoints.md) return 'sm'; // Small
-    if (width < breakpoints.lg) return 'md'; // Medium
-    if (width < breakpoints.xl) return 'lg'; // Large
-    return 'xl'; // Extra large
+    if (typeof window !== 'undefined') {
+      const width = window.innerWidth;
+      if (width < breakpoints.sm) return 'xs'; // Extra small
+      if (width < breakpoints.md) return 'sm'; // Small
+      if (width < breakpoints.lg) return 'md'; // Medium
+      if (width < breakpoints.xl) return 'lg'; // Large
+      return 'xl'; // Extra large
+    }
+    return 'xs';// Extra large
   }
 
   useEffect(() => {

@@ -78,13 +78,13 @@ export default function Header() {
   }, [screenSize]);
 
   return (
-    <Fragment>
+    <section>
       <header className={styles.header}>
         <div
           className={clsx(styles.header__icon, styles['header__menu-icon'])}
-          onClick={handleShowMenu}
           role="button"
           tabIndex={0}
+          onClick={handleShowMenu}
         >
           <Icons.Menu />
         </div>
@@ -149,6 +149,6 @@ export default function Header() {
           })}
         </div>
       </div>
-    </Fragment>
+    </section>
   );
 }
