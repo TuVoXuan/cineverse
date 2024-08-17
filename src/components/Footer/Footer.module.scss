@@ -1,0 +1,111 @@
+@use '../../styles/variables.scss';
+@import '../../styles/responsive.scss';
+
+.footer {
+  padding: 40px;
+  background-color: variables.$slate-100;
+  border-top: 1px solid variables.$slate-200;
+
+  &__all-rights-reserved {
+    position: relative;
+    text-align: center;
+    margin-top: 40px;
+    padding: 30px 0;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 1px;
+      border-top: 1px solid variables.$gray-300;
+    }
+  }
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 30px;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  &__logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: variables.$sky-500;
+    text-align: center;
+
+    @include respond-to(md) {
+      text-align: left;
+      align-self: center;
+    }
+  }
+
+  &__title-section {
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 12px;
+
+    @include respond-to(md) {
+      text-align: left;
+    }
+  }
+
+  &__nav-wrapper {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+
+    @include respond-to(md) {
+      flex-direction: column;
+    }
+
+    &__item {
+      font-size: 14px;
+    }
+  }
+
+  &__contact-wrapper {
+    display: flex;
+    gap: 12px;
+    flex-direction: column;
+    padding: 0 60px;
+    align-items: center;
+
+    @include respond-to(md) {
+      align-items: start;
+      padding: 0;
+    }
+
+    &__item {
+      font-size: 14px;
+      text-align: center;
+
+      @include respond-to(md) {
+        text-align: left;
+      }
+    }
+  }
+
+  &__social-wrapper {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    @include respond-to(md) {
+      justify-content: start;
+    }
+
+    &__item {
+      height: 24px;
+      width: 24px;
+    }
+  }
+}

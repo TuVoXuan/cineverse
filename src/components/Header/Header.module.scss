@@ -1,0 +1,98 @@
+@use '../../styles/variables';
+@import '../../styles/responsive';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: variables.$white;
+
+  @include respond-to(xl) {
+    padding: 12px 32px;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 28px;
+    color: variables.$sky-500;
+  }
+
+  &__icon-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: variables.$gray-500;
+  }
+
+  &__icon {
+    height: 24px;
+    width: 24px;
+  }
+
+  &__left-icons {
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
+
+    @include respond-to(sm) {
+      column-gap: 20px;
+    }
+  }
+
+  &__menu-icon {
+    display: block;
+
+    @include respond-to(xl) {
+      display: none;
+    }
+  }
+
+  &__menu {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: 0.25s all linear;
+    background-color: variables.$white;
+    border-top: 1px solid variables.$gray-300;
+
+    &--collage {
+      grid-template-rows: 1fr;
+      border-bottom: 1px solid variables.$gray-300;
+    }
+  }
+  &__right-nav {
+    display: none;
+
+    @include respond-to(xl) {
+      display: block;
+
+      & .nav-menu {
+        display: flex;
+        column-gap: 12px;
+        overflow: unset;
+
+        &__item {
+          padding: 8px 0;
+        }
+      }
+    }
+  }
+}
+
+.nav-menu {
+  overflow: hidden;
+
+  &__item {
+    color: variables.$gray-500;
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}
+
+.show_label {
+  display: none;
+
+  @include respond-to(sm) {
+    display: inline-block;
+  }
+}

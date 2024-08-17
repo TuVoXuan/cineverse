@@ -1,0 +1,27 @@
+@use '../../styles/variables.scss';
+
+.dropdown-menu {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+
+  &__item-wrapper {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: variables.$white;
+    border-radius: 6px;
+    box-shadow:
+      0 4px 6px -1px rgb(0 0 0 / 0.1),
+      0 2px 4px -2px rgb(0 0 0 / 0.1);
+    padding-right: 32px;
+    border: 1px solid variables.$gray-300;
+  }
+
+  &__item {
+    padding: 8px 0 8px 32px;
+    color: variables.$gray-500;
+    font-size: 14px;
+    text-wrap: nowrap;
+  }
+}
