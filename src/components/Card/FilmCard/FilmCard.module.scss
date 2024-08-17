@@ -1,0 +1,109 @@
+@use '../../../styles/variables.scss';
+
+.film-card {
+  position: relative;
+  border-radius: 6px;
+  box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03);
+
+  &__img-container {
+    position: relative;
+
+    &__img {
+      width: 100%;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+    }
+  }
+
+  &__info {
+    background-color: variables.$white;
+    font-size: 14px;
+    padding: 8px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+
+    &__film-name {
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    &__released-date {
+      color: variables.$gray-400;
+    }
+  }
+
+  &__buy-ticket {
+    position: absolute;
+    bottom: 0;
+    background-color: variables.$red-600;
+    width: 100%;
+    cursor: pointer;
+    text-align: center;
+    color: variables.$white;
+    font-weight: 500;
+    font-size: 14px;
+  }
+}
+
+.btn-group {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  border-radius: 6px;
+  overflow: hidden;
+  z-index: 1;
+
+  &__button {
+    color: variables.$gray-500;
+    background-color: variables.$slate-200;
+    transition: all 0.3s linear;
+    padding: 4px 4px;
+
+    &__icon {
+      height: 12px;
+      width: 12px;
+    }
+
+    &:hover {
+      background-color: variables.$zinc-300;
+    }
+  }
+}
+
+.sprite {
+  position: absolute;
+  top: 5px;
+  left: -5px;
+  z-index: 1;
+
+  &__content {
+    position: relative;
+    padding: 2px 0;
+    text-align: center;
+    height: 20px;
+    font-weight: 700;
+    color: variables.$white;
+    font-size: 10px;
+    background-color: variables.$red-600;
+    min-width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    border-bottom-left-radius: 0;
+    text-transform: uppercase;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 100%;
+      height: 0;
+      width: 0;
+      border-bottom: 5px solid transparent;
+      border-right: 5px solid variables.$red-600;
+    }
+  }
+}

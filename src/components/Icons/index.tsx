@@ -8,6 +8,8 @@ import Instagram from './Instagram';
 import Youtube from './Youtube';
 import Tiktok from './Tiktok';
 import Twitter from './Twitter';
+import Heart from './Heart';
+import Star from './Star';
 
 const Icons = {
   MapPin,
@@ -20,6 +22,8 @@ const Icons = {
   Youtube,
   Tiktok,
   Twitter,
+  Heart,
+  Star,
 };
 
 export default Icons;

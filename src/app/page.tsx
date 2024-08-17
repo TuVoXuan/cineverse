@@ -1,9 +1,20 @@
 'use client';
-import Footer from '@/components/Footer/Footer';
-import Header from '@/components/Header/Header';
+
+import FilmCard from '@/components/Card/FilmCard/FilmCard';
 
 export default function Home() {
   return (
-    <div className="mt-4">hello world hello world hello world hello world hello world hello world hello world</div>
+    <div className="p-3">
+      <div className="grid grid-cols-2 gap-6">
+        <FilmCard />
+        <FilmCard />
+        <FilmCard />
+        <FilmCard />
+        <FilmCard />
+        <FilmCard />
+        <FilmCard />
+        <FilmCard />
+      </div>
+    </div>
   );
 }
