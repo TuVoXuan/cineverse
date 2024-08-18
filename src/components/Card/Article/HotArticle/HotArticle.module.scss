@@ -1,0 +1,37 @@
+@use '../../../../styles/variables.scss';
+
+.hot-article {
+  &__img {
+    width: 100%;
+    border-radius: 6px;
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 24px;
+    margin-top: 12px;
+    margin-bottom: 3px;
+    line-height: 26px;
+  }
+
+  &__info {
+    font-size: 13px;
+    &__text-link {
+      color: variables.$red-600;
+    }
+    &__text-muted {
+      color: variables.$gray-400;
+    }
+  }
+  &__summary {
+    margin-top: 6px;
+    font-size: 13px;
+    color: variables.$gray-400;
+    font-weight: 500;
+  }
+
+  :global(.article-info__title) {
+    font-size: 26px;
+    line-height: 28.6px;
+  }
+}

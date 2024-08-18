@@ -1,4 +1,5 @@
 @use '../styles/variables.scss';
+@import '../styles/responsive.scss';
 
 .showing-film-container {
   margin-top: 12px;
@@ -25,6 +26,36 @@
 
     :global(.swiper-pagination) {
       position: static;
+    }
+  }
+}
+
+.articles {
+  margin-top: 12px;
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+
+  @include respond-to(lg) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  &__hot-article {
+    @include respond-to(lg) {
+      grid-column: span 8 / span 8;
+    }
+  }
+
+  &__sm-hot-article {
+    background-color: variables.$white;
+    padding: 16px;
+    box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03);
+    border: 1px solid variables.$slate-100;
+    border-radius: 6px;
+    height: fit-content;
+
+    @include respond-to(lg) {
+      grid-column: span 4 / span 4;
     }
   }
 }
