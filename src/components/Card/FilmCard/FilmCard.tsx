@@ -6,17 +6,17 @@ import Icons from '@/components/Icons';
 export default function FilmCard() {
   return (
     <div className={styles['film-card']}>
-      <span className={styles['sprite']}>
+      {/* <span className={styles['sprite']}>
         <span className={styles['sprite__content']}>Chiếu sớm</span>
-      </span>
-      <div className={styles['btn-group']}>
+      </span> */}
+      {/* <div className={styles['btn-group']}>
         <button className={styles['btn-group__button']}>
           <Icons.Heart className={styles['btn-group__button__icon']} />
         </button>
         <button className={styles['btn-group__button']}>
           <Icons.Star className={styles['btn-group__button__icon']} />
         </button>
-      </div>
+      </div> */}
       <a className={styles['film-card__img-container']} href="#" title="Đẹp trai thấy sai sai">
         <Image
           src={'https://cdn.moveek.com/storage/media/cache/tall/66ab4092261e7067687988.jpg'}
