@@ -1,0 +1,35 @@
+@use '../../../../styles/variables.scss';
+@import '../../../../styles/responsive.scss';
+
+.container {
+  display: grid;
+
+  @include respond-to(sm) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  &__img {
+    @include respond-to(sm) {
+      grid-column: span 4 / span 4;
+    }
+
+    & img {
+      width: 100%;
+      border-radius: 6px;
+    }
+  }
+
+  &__content {
+    & :global(.article-summary) {
+      display: none;
+    }
+    @include respond-to(sm) {
+      grid-column: span 8 / span 8;
+
+      & :global(.article-summary) {
+        display: block;
+      }
+    }
+  }
+}
