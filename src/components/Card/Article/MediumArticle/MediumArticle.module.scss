@@ -6,6 +6,7 @@
 
   @include respond-to(sm) {
     grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 24px;
   }
 
   &__img {
@@ -20,23 +21,15 @@
   }
 
   &__content {
-    &__title {
-      font-size: 15px;
-      font-weight: 600;
+    & :global(.article-summary) {
+      display: none;
     }
-    &__info {
-      font-size: 13px;
-      &__text-link {
-        color: variables.$red-600;
+    @include respond-to(sm) {
+      grid-column: span 8 / span 8;
+
+      & :global(.article-summary) {
+        display: block;
       }
-      &__text-muted {
-        color: variables.$gray-400;
-      }
-    }
-    &__summary {
-      margin-top: 6px;
-      font-weight: 500;
-      color: variables.$gray-400;
     }
   }
 }

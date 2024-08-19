@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React, { Fragment } from 'react';
 import styles from './ArticleInfo.module.scss';
+import clsx from 'clsx';
 
 type props = {
   title: string;
@@ -15,7 +16,7 @@ type props = {
 export default function ArticleInfo({ title, href, info, summary }: props) {
   return (
     <Fragment>
-      <p className={styles['article-info__title']}>
+      <p className={clsx(styles['article-info__title'], 'article-title')}>
         <Link href={href}>{title}</Link>
       </p>
       <p className={styles['article-info__info']}>
@@ -33,7 +34,7 @@ export default function ArticleInfo({ title, href, info, summary }: props) {
           );
         })}
       </p>
-      {summary && <p className={styles['article-info__summary']}>{summary}</p>}
+      {summary && <p className={clsx(styles['article-info__summary'], 'article-summary')}>{summary}</p>}
     </Fragment>
   );
 }

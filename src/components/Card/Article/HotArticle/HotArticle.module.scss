@@ -1,4 +1,5 @@
 @use '../../../../styles/variables.scss';
+@use '../ArticleInfo/ArticleInfo.module.scss';
 
 .hot-article {
   &__img {
@@ -30,7 +31,7 @@
     font-weight: 500;
   }
 
-  :global(.article-info__title) {
+  & :global(.article-title) {
     font-size: 26px;
     line-height: 28.6px;
   }
