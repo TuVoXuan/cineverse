@@ -1,0 +1,36 @@
+@use '../../styles/variables.scss';
+
+.showtimes {
+  &__banner {
+    color: variables.$white;
+    background-image: url('../../assets/images/showtimes-banner.png');
+    background-size: cover;
+    background-position: 50% 50%;
+    text-align: center;
+    &__title {
+      font-weight: 700;
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+    &__description {
+      font-size: 15px;
+    }
+  }
+
+  &__main-content {
+    margin-top: 12px;
+    display: grid;
+    gap: 24px;
+  }
+
+  &__cinema-branch-form {
+    display: grid;
+    gap: 20px;
+    &__select {
+      width: 100%;
+    }
+  }
+}
+
+.screenings {
+}

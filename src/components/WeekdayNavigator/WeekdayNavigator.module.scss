@@ -1,0 +1,22 @@
+@use '../../styles/variables.scss';
+.weekdays {
+  display: flex;
+  border-radius: 6px;
+  overflow: hidden;
+  &__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: variables.$gray-200;
+    transition: all 0.3s linear;
+    color: variables.$gray-400;
+    padding: 8px 12px;
+    flex: 1;
+    font-size: 15px;
+
+    &:hover {
+      background-color: variables.$slate-200;
+    }
+  }
+}
