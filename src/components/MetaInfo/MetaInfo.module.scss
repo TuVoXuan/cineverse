@@ -1,0 +1,16 @@
+@use '../../styles/variables.scss';
+
+.meta-info {
+  font-size: 13px;
+  &__text-link {
+    &--red {
+      color: variables.$red-600;
+    }
+    &--blue {
+      color: variables.$blue-500;
+    }
+  }
+  &__text-muted {
+    color: variables.$gray-400;
+  }
+}

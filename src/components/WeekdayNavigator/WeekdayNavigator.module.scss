@@ -15,7 +15,7 @@
     flex: 1;
     font-size: 15px;
 
-    &:hover {
+    &--active {
       background-color: variables.$slate-200;
     }
   }

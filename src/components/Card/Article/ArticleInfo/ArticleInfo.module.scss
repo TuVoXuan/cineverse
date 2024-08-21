@@ -8,16 +8,6 @@
     font-weight: 600;
   }
 
-  &__info {
-    font-size: 13px;
-    &__text-link {
-      color: variables.$red-600;
-    }
-    &__text-muted {
-      color: variables.$gray-400;
-    }
-  }
-
   &__summary {
     margin-top: 6px;
     font-size: 13px;

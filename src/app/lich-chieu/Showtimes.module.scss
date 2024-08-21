@@ -19,6 +19,7 @@
 
   &__main-content {
     margin-top: 12px;
+    margin-bottom: 12px;
     display: grid;
     gap: 24px;
   }
@@ -33,4 +34,6 @@
 }
 
 .screenings {
+  display: grid;
+  gap: 12px;
 }

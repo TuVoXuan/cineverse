@@ -1,0 +1,19 @@
+@use '../../../styles/variables.scss';
+
+.branch-info {
+  background-color: variables.$gray-200;
+  padding: 12px 20px;
+  border-radius: 6px;
+  &__branch-name {
+    font-size: 15px;
+    color: variables.$black;
+  }
+  &__date {
+    font-size: 15px;
+    color: variables.$gray-400;
+  }
+  &__address {
+    font-size: 13px;
+    color: variables.$gray-400;
+  }
+}

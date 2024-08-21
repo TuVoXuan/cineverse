@@ -1,0 +1,55 @@
+@use '../../../../styles/variables.scss';
+@import '../../../../styles/responsive.scss';
+
+.showtime-schedule {
+  &__title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  &__schedule {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+    @include respond-to(lg) {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+    @include respond-to(xl) {
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+  }
+
+  &__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 56px;
+    height: 38px;
+    padding: 4px 0;
+    border-radius: 4px;
+    border: 1px solid variables.$zinc-800;
+    background-color: variables.$white;
+
+    &--disabled {
+      background-color: variables.$gray-200;
+      border: none;
+      pointer-events: none;
+    }
+
+    &__timing {
+      font-size: 13px;
+      color: variables.$zinc-800;
+    }
+
+    &__price {
+      font-size: 11px;
+      color: variables.$gray-400;
+
+      &--hidden {
+        display: none;
+      }
+    }
+  }
+}

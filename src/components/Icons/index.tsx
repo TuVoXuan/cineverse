@@ -10,6 +10,8 @@ import Tiktok from './Tiktok';
 import Twitter from './Twitter';
 import Heart from './Heart';
 import Star from './Star';
+import ExclamationCircle from './ExclamationCircle';
+import CheckCircle from './CheckCircle';
 
 const Icons = {
   MapPin,
@@ -24,6 +26,8 @@ const Icons = {
   Twitter,
   Heart,
   Star,
+  ExclamationCircle,
+  CheckCircle,
 };
 
 export default Icons;
