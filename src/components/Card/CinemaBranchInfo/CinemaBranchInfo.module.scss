@@ -4,6 +4,7 @@
   background-color: variables.$gray-200;
   padding: 12px 20px;
   border-radius: 6px;
+  border: 1px solid variables.$slate-200;
   &__branch-name {
     font-size: 15px;
     color: variables.$black;

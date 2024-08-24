@@ -1,4 +1,5 @@
 @use '../../styles/variables.scss';
+@import '../../styles/responsive.scss';
 
 .showtimes {
   &__banner {
@@ -15,13 +16,23 @@
     &__description {
       font-size: 15px;
     }
+    @include respond-to(xl) {
+      max-width: 1440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 
   &__main-content {
-    margin-top: 12px;
-    margin-bottom: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
     display: grid;
     gap: 24px;
+
+    @include respond-to(sm) {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 16px;
+    }
   }
 
   &__cinema-branch-form {
@@ -30,10 +41,32 @@
     &__select {
       width: 100%;
     }
+    @include respond-to(sm) {
+      display: none;
+    }
+  }
+}
+
+.provinces {
+  display: none;
+  @include respond-to(sm) {
+    display: block;
+    grid-column: span 3 / span 3;
+  }
+}
+
+.cinemas {
+  display: none;
+  @include respond-to(sm) {
+    display: block;
+    grid-column: span 3 / span 3;
   }
 }
 
 .screenings {
   display: grid;
   gap: 12px;
+  @include respond-to(sm) {
+    grid-column: span 6 / span 6;
+  }
 }

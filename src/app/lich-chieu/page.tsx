@@ -10,6 +10,8 @@ import CinemaBranchInfo from '@/components/Card/CinemaBranchInfo/CinemaBranchInf
 import dayjs from 'dayjs';
 import Alert from '@/components/Alert/Alert';
 import FilmShowtimes from '@/components/Card/FilmShowtimes/FilmShowtimes';
+import ListGroup from '@/components/ListGroup/ListGroup';
+import { title } from 'process';
 
 const provinceOptions = [
   { label: 'Tp. Hồ Chí Minh', value: 'tp-ho-chi-minh' },
@@ -37,6 +39,53 @@ const cinemaBranchOptions = [
   },
 ];
 
+const provinceItems = [
+  {
+    title: 'Khu vực',
+    isTitle: true,
+  },
+  {
+    title: 'Tp. Hồ Chí Minh',
+    suffixNumber: 56,
+  },
+  {
+    title: 'Hà Nội',
+    suffixNumber: 43,
+  },
+  {
+    title: 'Đà Nẵng',
+    suffixNumber: 9,
+  },
+  {
+    title: 'Đồng Nai',
+    suffixNumber: 8,
+  },
+];
+const cinemaItems = [
+  {
+    title: 'Cinstar',
+    image: 'https://cdn.moveek.com/storage/media/cache/square/59a2a1753d6416c84b4e05146280584a33448c14.png',
+    isTitle: true,
+  },
+  {
+    title: 'Cinstar Quoc Thanh',
+  },
+  {
+    title: 'Cinstar Hai Ba Trung',
+  },
+  {
+    title: 'Mega GS Cinemas',
+    image: 'https://cdn.moveek.com/storage/media/cache/square/4e2f8af9e4d780495cbc387e5868c2a48c7f82c2.png',
+    isTitle: true,
+  },
+  {
+    title: 'Mega GS Cao Thắng',
+  },
+  {
+    title: 'Mega GS Lý Chính Thắng',
+  },
+];
+
 export default function Showtimes() {
   const handleChangeProvince = (value: string) => {
     console.log(value);
@@ -48,7 +97,7 @@ export default function Showtimes() {
   return (
     <Fragment>
       <div className={styles.showtimes__banner}>
-        <div className="container px-3 py-6">
+        <div className=" px-3 py-6">
           <h1 className={styles.showtimes__banner__title}>Lịch chiếu</h1>
           <p className={styles.showtimes__banner__description}>Tìm lịch chiếu phim / rạp nhanh nhất với chỉ 1 bước!</p>
         </div>
@@ -65,6 +114,12 @@ export default function Showtimes() {
             options={cinemaBranchOptions}
             onChange={handleChangeCinemaBranch}
           />
+        </div>
+        <div className={styles.provinces}>
+          <ListGroup items={provinceItems} />
+        </div>
+        <div className={styles.cinemas}>
+          <ListGroup items={cinemaItems} />
         </div>
         <div className={styles.screenings}>
           <WeekdayNavigator />

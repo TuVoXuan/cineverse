@@ -78,7 +78,7 @@ export default function Header() {
   }, [screenSize]);
 
   return (
-    <section>
+    <section className={styles['header-wrap']}>
       <header className={styles.header}>
         <div
           className={clsx(styles.header__icon, styles['header__menu-icon'])}

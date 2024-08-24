@@ -1,11 +1,12 @@
 @use '../../../styles/variables.scss';
+@import '../../../styles/responsive.scss';
 
 .film-showtimes {
   display: grid;
   column-gap: 12px;
   padding: 16px;
   border-radius: 6px;
-  border: 1px solid variables.$slate-100;
+  border: 1px solid variables.$gray-200;
   box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03);
   grid-template-columns: repeat(12, minmax(0, 1fr));
   background-color: variables.$white;
@@ -17,6 +18,9 @@
       height: auto;
       border-radius: 6px;
     }
+    @include respond-to(xl) {
+      grid-column: span 2 / span 2;
+    }
   }
 
   &__schedule-wrap {
@@ -25,6 +29,9 @@
       font-size: 15px;
       margin-bottom: 3px;
       font-weight: 600;
+    }
+    @include respond-to(xl) {
+      grid-column: span 10 / span 10;
     }
   }
 }
