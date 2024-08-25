@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images: {
+  env: {
+    API_URL: process.env.API_URL
+  },
+  images: {
     remotePatterns: [
       {
         protocol: 'https',

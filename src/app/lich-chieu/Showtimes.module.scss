@@ -66,6 +66,7 @@
 .screenings {
   display: grid;
   gap: 12px;
+  height: fit-content;
   @include respond-to(sm) {
     grid-column: span 6 / span 6;
   }

@@ -3,6 +3,7 @@ import { Montserrat } from 'next/font/google';
 import './globals.css';
 import PageLayout from '@/components/Layout/PageLayout';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
+import { Toaster } from 'react-hot-toast';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
         <AntdRegistry>
           <PageLayout>{children}</PageLayout>
         </AntdRegistry>
+        <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
       </body>
     </html>
   );

@@ -1,17 +1,16 @@
 'use client';
-import Image from 'next/image';
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import styles from './Showtimes.module.scss';
 import { Select } from 'antd';
 import clsx from 'clsx';
 import WeekdayNavigator from '@/components/WeekdayNavigator/WeekdayNavigator';
-import Icons from '@/components/Icons';
 import CinemaBranchInfo from '@/components/Card/CinemaBranchInfo/CinemaBranchInfo';
 import dayjs from 'dayjs';
 import Alert from '@/components/Alert/Alert';
 import FilmShowtimes from '@/components/Card/FilmShowtimes/FilmShowtimes';
-import ListGroup from '@/components/ListGroup/ListGroup';
-import { title } from 'process';
+import ListGroup, { ListItem } from '@/components/ListGroup/ListGroup';
+import toast from 'react-hot-toast';
+import { regionApi } from '@/api/region-api';
 
 const provinceOptions = [
   { label: 'Tp. Hồ Chí Minh', value: 'tp-ho-chi-minh' },
@@ -39,28 +38,6 @@ const cinemaBranchOptions = [
   },
 ];
 
-const provinceItems = [
-  {
-    title: 'Khu vực',
-    isTitle: true,
-  },
-  {
-    title: 'Tp. Hồ Chí Minh',
-    suffixNumber: 56,
-  },
-  {
-    title: 'Hà Nội',
-    suffixNumber: 43,
-  },
-  {
-    title: 'Đà Nẵng',
-    suffixNumber: 9,
-  },
-  {
-    title: 'Đồng Nai',
-    suffixNumber: 8,
-  },
-];
 const cinemaItems = [
   {
     title: 'Cinstar',
@@ -87,12 +64,41 @@ const cinemaItems = [
 ];
 
 export default function Showtimes() {
+  const [provinces, setProvinces] = useState<ListItem[]>();
   const handleChangeProvince = (value: string) => {
     console.log(value);
   };
   const handleChangeCinemaBranch = (value: string) => {
     console.log('value: ', value);
   };
+
+  async function fetchProvinces() {
+    try {
+      const response = await regionApi.getAll();
+      const provincesList = response.data.data.map(
+        (item) =>
+          ({
+            title: item.name,
+            suffixNumber: item.cinema_branches_count,
+            isTitle: false,
+            code: item.code,
+            id: item.id,
+          }) as ListItem,
+      );
+      provincesList.unshift({
+        title: 'Khu vực',
+        isTitle: true,
+      } as ListItem);
+
+      setProvinces(provincesList);
+    } catch (error: any) {
+      toast.error(error?.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchProvinces();
+  }, []);
 
   return (
     <Fragment>
@@ -116,7 +122,7 @@ export default function Showtimes() {
           />
         </div>
         <div className={styles.provinces}>
-          <ListGroup items={provinceItems} />
+          <ListGroup items={provinces || []} />
         </div>
         <div className={styles.cinemas}>
           <ListGroup items={cinemaItems} />

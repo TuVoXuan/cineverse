@@ -3,13 +3,17 @@ import styles from './ListGroup.module.scss';
 import Image from 'next/image';
 import clsx from 'clsx';
 
+export type ListItem = {
+  title: string;
+  image?: string;
+  suffixNumber?: number;
+  isTitle?: boolean;
+  code?: string;
+  id?: number;
+};
+
 type props = {
-  items: {
-    title: string;
-    image?: string;
-    suffixNumber?: number;
-    isTitle?: boolean;
-  }[];
+  items: ListItem[];
 };
 
 export default function ListGroup({ items }: props) {
@@ -46,7 +50,9 @@ export default function ListGroup({ items }: props) {
             )}
           >
             {item.title}
-            {item.suffixNumber && <span className={styles['container__item__suffix-number']}>{item.suffixNumber}</span>}
+            {item.suffixNumber ? (
+              <span className={styles['container__item__suffix-number']}>{item.suffixNumber}</span>
+            ) : null}
           </div>
         );
       })}

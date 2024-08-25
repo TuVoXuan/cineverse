@@ -1,6 +1,13 @@
 @use '../../styles/variables.scss';
+@import '../../styles/responsive.scss';
 
 .container {
   background-color: variables.$gray-100;
   border-top: 1px solid transparent;
+
+  @include respond-to(xl) {
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
