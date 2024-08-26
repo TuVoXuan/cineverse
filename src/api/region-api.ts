@@ -1,7 +1,6 @@
 import axiosService from "@/configurations/axios-service";
 
 const API_URL = process.env.API_URL;
-console.log("API_URL: ", API_URL);
 const ENDPOINT = 'regions';
 const URL = `${API_URL}/${ENDPOINT}`;
 

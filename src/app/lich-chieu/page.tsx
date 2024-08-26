@@ -11,6 +11,8 @@ import FilmShowtimes from '@/components/Card/FilmShowtimes/FilmShowtimes';
 import ListGroup, { ListItem } from '@/components/ListGroup/ListGroup';
 import toast from 'react-hot-toast';
 import { regionApi } from '@/api/region-api';
+import { cinemaApi } from '@/api/cinema-api';
+import { title } from 'process';
 
 const provinceOptions = [
   { label: 'Tp. Hồ Chí Minh', value: 'tp-ho-chi-minh' },
@@ -65,11 +67,15 @@ const cinemaItems = [
 
 export default function Showtimes() {
   const [provinces, setProvinces] = useState<ListItem[]>();
-  const handleChangeProvince = (value: string) => {
-    console.log(value);
+  const [cinemaBranches, setCinemaBranches] = useState<ListItem[]>();
+  const [activeProvince, setActiveProvince] = useState<string>();
+  const [activeCinemaBranch, setActiveCinemaBranch] = useState<string>();
+
+  const handleChangeProvince = (item: ListItem) => {
+    setActiveProvince(item.code);
   };
-  const handleChangeCinemaBranch = (value: string) => {
-    console.log('value: ', value);
+  const handleChangeCinemaBranch = (item: ListItem) => {
+    setActiveCinemaBranch(item.code);
   };
 
   async function fetchProvinces() {
@@ -85,6 +91,8 @@ export default function Showtimes() {
             id: item.id,
           }) as ListItem,
       );
+      setActiveProvince(provincesList[0].code);
+
       provincesList.unshift({
         title: 'Khu vực',
         isTitle: true,
@@ -96,10 +104,43 @@ export default function Showtimes() {
     }
   }
 
+  async function fetchCinemaBranches() {
+    try {
+      const response = await cinemaApi.getCinemaBranchByRegion(activeProvince || '');
+      const branchesList: ListItem[] = [];
+      response.data.forEach((cinema) => {
+        branchesList.push({
+          title: cinema.name,
+          image: cinema.logo.url,
+          code: cinema.code,
+          id: cinema.id,
+          isTitle: true,
+        });
+        branchesList.push(
+          ...cinema.branches.map(
+            (branch) =>
+              ({
+                title: branch.name,
+                code: branch.code,
+                id: branch.id,
+              }) as ListItem,
+          ),
+        );
+      });
+      setCinemaBranches(branchesList);
+    } catch (error) {
+      toast.error((error as IRespondError).message);
+    }
+  }
+
   useEffect(() => {
     fetchProvinces();
   }, []);
-
+  useEffect(() => {
+    if (activeProvince) {
+      fetchCinemaBranches();
+    }
+  }, [activeProvince]);
   return (
     <Fragment>
       <div className={styles.showtimes__banner}>
@@ -122,10 +163,10 @@ export default function Showtimes() {
           />
         </div>
         <div className={styles.provinces}>
-          <ListGroup items={provinces || []} />
+          <ListGroup items={provinces || []} onChange={handleChangeProvince} activeItem={activeProvince} />
         </div>
         <div className={styles.cinemas}>
-          <ListGroup items={cinemaItems} />
+          <ListGroup items={cinemaBranches || []} onChange={handleChangeCinemaBranch} activeItem={activeCinemaBranch} />
         </div>
         <div className={styles.screenings}>
           <WeekdayNavigator />

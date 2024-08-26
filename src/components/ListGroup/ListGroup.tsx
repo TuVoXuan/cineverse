@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './ListGroup.module.scss';
 import Image from 'next/image';
 import clsx from 'clsx';
@@ -14,9 +14,14 @@ export type ListItem = {
 
 type props = {
   items: ListItem[];
+  activeItem: string | undefined;
+  onChange: (item: ListItem) => void;
 };
 
-export default function ListGroup({ items }: props) {
+export default function ListGroup({ items, activeItem, onChange }: props) {
+  const handleClickItem = (item: ListItem) => {
+    onChange(item);
+  };
   return (
     <div className={styles.container}>
       {items.map((item, index) => {
@@ -47,7 +52,9 @@ export default function ListGroup({ items }: props) {
               styles['container__item'],
               index < items.length - 1 && styles['container__border-bottom'],
               item.suffixNumber ? styles['container__flex'] : styles['container__truncate'],
+              activeItem === item.code && styles['container__item--active'],
             )}
+            onClick={() => handleClickItem(item)}
           >
             {item.title}
             {item.suffixNumber ? (

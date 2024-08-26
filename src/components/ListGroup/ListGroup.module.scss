@@ -24,6 +24,7 @@
     padding: 12px 20px;
     color: variables.$slate-500;
     background-color: variables.$white;
+    transition: all 0.3s linear;
 
     &__suffix-number {
       flex-shrink: 0;
@@ -32,6 +33,20 @@
       font-size: 11px;
       border-radius: 20px;
       padding: 3px 6px;
+    }
+
+    &--active {
+      background-color: variables.$blue-500;
+      color: variables.$white;
+      &:hover {
+        background-color: variables.$blue-500 !important;
+        cursor: pointer;
+      }
+    }
+
+    &:hover {
+      background-color: variables.$slate-100;
+      cursor: pointer;
     }
   }
 
