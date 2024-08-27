@@ -1,6 +1,15 @@
 @use '../../styles/variables';
 @import '../../styles/responsive';
 
+.header-wrap {
+  @include respond-to(xl) {
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+}
+
 .header {
   display: flex;
   justify-content: space-between;

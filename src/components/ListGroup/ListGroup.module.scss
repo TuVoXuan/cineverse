@@ -1,0 +1,68 @@
+@use '../../styles/variables.scss';
+
+.container {
+  border-radius: 6px;
+  border: 1px solid variables.$gray-200;
+  font-size: 15px;
+  overflow: hidden;
+  &__head-title {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    background-color: variables.$gray-200;
+    color: variables.$slate-500;
+    &__img {
+      height: 24px;
+      width: 24px;
+      object-fit: contain;
+      border-radius: 50%;
+      margin-right: 12px;
+    }
+  }
+  &__item {
+    color: variables.$gray-400;
+    padding: 12px 20px;
+    color: variables.$slate-500;
+    background-color: variables.$white;
+    transition: all 0.3s linear;
+
+    &__suffix-number {
+      flex-shrink: 0;
+      background-color: variables.$blue-500;
+      color: variables.$white;
+      font-size: 11px;
+      border-radius: 20px;
+      padding: 3px 6px;
+    }
+
+    &--active {
+      background-color: variables.$blue-500;
+      color: variables.$white;
+      &:hover {
+        background-color: variables.$blue-500 !important;
+        cursor: pointer;
+      }
+    }
+
+    &:hover {
+      background-color: variables.$slate-100;
+      cursor: pointer;
+    }
+  }
+
+  &__border-bottom {
+    border-bottom: 1px solid variables.$slate-200;
+  }
+
+  &__truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

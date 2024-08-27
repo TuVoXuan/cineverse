@@ -1,0 +1,27 @@
+@use '../../styles/variables.scss';
+
+.alert {
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+  color: variables.$zinc-800;
+  border-radius: 6px;
+  font-size: 15px;
+  padding: 12px 20px;
+
+  &__icon {
+    height: 16px;
+    width: 16px;
+    flex-shrink: 0;
+  }
+
+  &--warning {
+    background-color: variables.$yellow-400;
+  }
+  &--success {
+    background-color: variables.$green-400;
+  }
+  &--error {
+    background-color: variables.$red-400;
+  }
+}
