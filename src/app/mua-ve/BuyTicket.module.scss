@@ -1,0 +1,94 @@
+@use '../../styles/variables.scss';
+
+.wrapper {
+  background-color: variables.$white;
+  border-bottom: 1px solid variables.$slate-200;
+}
+
+.ticketing-step-wrap {
+  display: flex;
+  &__item {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 4px;
+    color: variables.$gray-400;
+    padding-top: 12px;
+    padding-bottom: 8px;
+    font-size: 12px;
+
+    &--active {
+      color: variables.$sky-500;
+    }
+
+    &__icon {
+      height: 20px;
+      width: 20px;
+    }
+
+    &:not(:last-child)::after {
+      position: absolute;
+      content: '';
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+      border-left: 15px solid variables.$gray-400;
+      top: 50%;
+      right: -6px;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+    &:not(:last-child) span::after {
+      position: absolute;
+      content: '';
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+      border-left: 15px solid variables.$white;
+      top: 50%;
+      right: -5px;
+      transform: translateY(-50%);
+      z-index: 2;
+    }
+  }
+}
+
+.ticketing-grid-layout {
+  display: grid;
+  gap: 16px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.ticketing-info-section {
+  &__group-action-btn {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 24px;
+
+    &__back-btn {
+      grid-column: span 3 / span 3;
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: 1px solid variables.$gray-500;
+      display: flex;
+      justify-content: center;
+    }
+
+    &__continue-btn {
+      border-radius: 6px;
+      grid-column: span 9 / span 9;
+      text-align: center;
+      padding: 8px 16px;
+      background-color: variables.$slate-700;
+      color: variables.$white;
+    }
+
+    &__back-btn:hover,
+    &__continue-btn:hover {
+      opacity: 0.8;
+    }
+  }
+}

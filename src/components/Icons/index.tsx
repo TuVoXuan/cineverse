@@ -12,6 +12,10 @@ import Heart from './Heart';
 import Star from './Star';
 import ExclamationCircle from './ExclamationCircle';
 import CheckCircle from './CheckCircle';
+import CreditCard from './CreditCard';
+import GridLayout from './GridLayout';
+import Box from './Box';
+import ArrowLeft from './ArrowLeft';
 
 const Icons = {
   MapPin,
@@ -28,6 +32,10 @@ const Icons = {
   Star,
   ExclamationCircle,
   CheckCircle,
+  CreditCard,
+  GridLayout,
+  Box,
+  ArrowLeft,
 };
 
 export default Icons;
