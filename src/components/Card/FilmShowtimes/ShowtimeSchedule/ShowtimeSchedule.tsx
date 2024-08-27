@@ -9,14 +9,15 @@ type props = {
   title: string;
   schedule: {
     time: Dayjs;
-    price: string;
+    // price: string;
     href: string;
   }[];
+  className?: string;
 };
 
-export default function ShowtimeSchedule({ title, schedule }: props) {
+export default function ShowtimeSchedule({ title, schedule, className }: props) {
   return (
-    <div className={styles['showtime-schedule']}>
+    <div className={clsx(styles['showtime-schedule'], className)}>
       <h4 className={styles['showtime-schedule__title']}>{title}</h4>
       <div className={styles['showtime-schedule__schedule']}>
         {schedule.map((item) => (
@@ -28,14 +29,14 @@ export default function ShowtimeSchedule({ title, schedule }: props) {
             )}
           >
             <span className={styles['showtime-schedule__item__timing']}>{item.time.format('HH:mm')}</span>
-            <span
+            {/* <span
               className={clsx(
                 styles['showtime-schedule__item__price'],
                 dayjs().isAfter(item.time) && styles['showtime-schedule__item__price--hidden'],
               )}
             >
               {item.price}K
-            </span>
+            </span> */}
           </Link>
         ))}
       </div>

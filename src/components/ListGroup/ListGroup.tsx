@@ -14,7 +14,7 @@ export type ListItem = {
 
 type props = {
   items: ListItem[];
-  activeItem: string | undefined;
+  activeItem: ListItem | undefined;
   onChange: (item: ListItem) => void;
 };
 
@@ -32,6 +32,7 @@ export default function ListGroup({ items, activeItem, onChange }: props) {
                 styles['container__head-title'],
                 index < items.length - 1 && styles['container__border-bottom'],
               )}
+              key={item.code}
             >
               {item.image && (
                 <Image
@@ -48,11 +49,12 @@ export default function ListGroup({ items, activeItem, onChange }: props) {
         }
         return (
           <div
+            key={item.code}
             className={clsx(
               styles['container__item'],
               index < items.length - 1 && styles['container__border-bottom'],
               item.suffixNumber ? styles['container__flex'] : styles['container__truncate'],
-              activeItem === item.code && styles['container__item--active'],
+              activeItem?.code === item.code && styles['container__item--active'],
             )}
             onClick={() => handleClickItem(item)}
           >

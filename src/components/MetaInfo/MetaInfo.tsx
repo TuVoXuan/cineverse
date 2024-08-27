@@ -3,12 +3,14 @@ import React, { Fragment } from 'react';
 import styles from './MetaInfo.module.scss';
 import clsx from 'clsx';
 
+export type MetaInfoItem = {
+  href?: string;
+  label: string;
+};
+
 type props = {
   textLinkColor: 'red' | 'blue';
-  info: {
-    href?: string;
-    label: string;
-  }[];
+  info: MetaInfoItem[];
   className?: string;
 };
 

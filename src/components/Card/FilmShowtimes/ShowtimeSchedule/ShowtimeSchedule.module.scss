@@ -38,6 +38,14 @@
       pointer-events: none;
     }
 
+    &:hover {
+      background-color: variables.$slate-700;
+    }
+
+    &:hover &__timing {
+      color: variables.$white;
+    }
+
     &__timing {
       font-size: 13px;
       color: variables.$zinc-800;

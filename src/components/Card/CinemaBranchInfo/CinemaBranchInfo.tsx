@@ -13,10 +13,10 @@ dayjs.updateLocale('en', {
 });
 
 type props = {
-  branchName: string;
+  branchName: string | undefined;
   branchHref: string;
   date: Dayjs;
-  address: string;
+  address: string | undefined;
 };
 
 export default function CinemaBranchInfo({ address, branchHref, branchName, date }: props) {

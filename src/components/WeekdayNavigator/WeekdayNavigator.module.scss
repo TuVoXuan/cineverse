@@ -14,6 +14,7 @@
     padding: 8px 12px;
     flex: 1;
     font-size: 15px;
+    cursor: pointer;
 
     &--active {
       background-color: variables.$slate-200;

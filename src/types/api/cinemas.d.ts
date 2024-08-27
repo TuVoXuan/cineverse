@@ -8,8 +8,9 @@ declare interface ICinemaBranches  {
     }
     branches: {
         id: number;
-    name: string;
-    code: string;
-    cinema_company_id: number;
+        name: string;
+        code: string;
+        cinema_company_id: number;
+        address: string
     }[]
 }

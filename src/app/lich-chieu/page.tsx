@@ -12,7 +12,13 @@ import ListGroup, { ListItem } from '@/components/ListGroup/ListGroup';
 import toast from 'react-hot-toast';
 import { regionApi } from '@/api/region-api';
 import { cinemaApi } from '@/api/cinema-api';
-import { title } from 'process';
+import { showtimesApi } from '@/api/showtimes-api';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
+
+type CinemaBranchItem = ListItem & {
+  address?: string;
+};
 
 const provinceOptions = [
   { label: 'Tp. Hồ Chí Minh', value: 'tp-ho-chi-minh' },
@@ -40,42 +46,19 @@ const cinemaBranchOptions = [
   },
 ];
 
-const cinemaItems = [
-  {
-    title: 'Cinstar',
-    image: 'https://cdn.moveek.com/storage/media/cache/square/59a2a1753d6416c84b4e05146280584a33448c14.png',
-    isTitle: true,
-  },
-  {
-    title: 'Cinstar Quoc Thanh',
-  },
-  {
-    title: 'Cinstar Hai Ba Trung',
-  },
-  {
-    title: 'Mega GS Cinemas',
-    image: 'https://cdn.moveek.com/storage/media/cache/square/4e2f8af9e4d780495cbc387e5868c2a48c7f82c2.png',
-    isTitle: true,
-  },
-  {
-    title: 'Mega GS Cao Thắng',
-  },
-  {
-    title: 'Mega GS Lý Chính Thắng',
-  },
-];
-
 export default function Showtimes() {
   const [provinces, setProvinces] = useState<ListItem[]>();
-  const [cinemaBranches, setCinemaBranches] = useState<ListItem[]>();
-  const [activeProvince, setActiveProvince] = useState<string>();
-  const [activeCinemaBranch, setActiveCinemaBranch] = useState<string>();
+  const [cinemaBranches, setCinemaBranches] = useState<CinemaBranchItem[]>();
+  const [activeProvince, setActiveProvince] = useState<ListItem>();
+  const [activeCinemaBranch, setActiveCinemaBranch] = useState<CinemaBranchItem>();
+  const [activeDate, setActiveDate] = useState<string>();
+  const [showtimesList, setShowtimesList] = useState<IShowtime[]>([]);
 
   const handleChangeProvince = (item: ListItem) => {
-    setActiveProvince(item.code);
+    setActiveProvince(item);
   };
-  const handleChangeCinemaBranch = (item: ListItem) => {
-    setActiveCinemaBranch(item.code);
+  const handleChangeCinemaBranch = (item: CinemaBranchItem) => {
+    setActiveCinemaBranch(item);
   };
 
   async function fetchProvinces() {
@@ -91,7 +74,7 @@ export default function Showtimes() {
             id: item.id,
           }) as ListItem,
       );
-      setActiveProvince(provincesList[0].code);
+      setActiveProvince(provincesList[0]);
 
       provincesList.unshift({
         title: 'Khu vực',
@@ -106,8 +89,8 @@ export default function Showtimes() {
 
   async function fetchCinemaBranches() {
     try {
-      const response = await cinemaApi.getCinemaBranchByRegion(activeProvince || '');
-      const branchesList: ListItem[] = [];
+      const response = await cinemaApi.getCinemaBranchByRegion(activeProvince?.code || '');
+      const branchesList: CinemaBranchItem[] = [];
       response.data.forEach((cinema) => {
         branchesList.push({
           title: cinema.name,
@@ -117,17 +100,27 @@ export default function Showtimes() {
           isTitle: true,
         });
         branchesList.push(
-          ...cinema.branches.map(
-            (branch) =>
-              ({
-                title: branch.name,
-                code: branch.code,
-                id: branch.id,
-              }) as ListItem,
-          ),
+          ...cinema.branches.map((branch) => ({
+            title: branch.name,
+            code: branch.code,
+            id: branch.id,
+            address: branch.address,
+          })),
         );
       });
+      setActiveCinemaBranch(branchesList[1]);
       setCinemaBranches(branchesList);
+    } catch (error) {
+      toast.error((error as IRespondError).message);
+    }
+  }
+
+  async function fetchShowtimes() {
+    try {
+      if (activeCinemaBranch?.code && activeDate) {
+        const response = await showtimesApi.getShowtimesByDateAndCinemaBranch(activeCinemaBranch.code, activeDate);
+        setShowtimesList(response.data);
+      }
     } catch (error) {
       toast.error((error as IRespondError).message);
     }
@@ -136,11 +129,17 @@ export default function Showtimes() {
   useEffect(() => {
     fetchProvinces();
   }, []);
+
   useEffect(() => {
     if (activeProvince) {
       fetchCinemaBranches();
     }
   }, [activeProvince]);
+
+  useEffect(() => {
+    fetchShowtimes();
+  }, [activeDate, activeCinemaBranch]);
+
   return (
     <Fragment>
       <div className={styles.showtimes__banner}>
@@ -169,18 +168,20 @@ export default function Showtimes() {
           <ListGroup items={cinemaBranches || []} onChange={handleChangeCinemaBranch} activeItem={activeCinemaBranch} />
         </div>
         <div className={styles.screenings}>
-          <WeekdayNavigator />
+          <WeekdayNavigator activeDate={activeDate} onChange={(date) => setActiveDate(date)} />
 
           <Alert type="warning" message="Nhấn vào suất chiếu để tiến hành mua vé" />
 
           <CinemaBranchInfo
-            branchName={'Cinestar Quoc Thanh'}
+            branchName={activeCinemaBranch?.title}
             branchHref={'#'}
-            date={dayjs()}
-            address={'271 Nguyễn Trãi, P. Nguyễn Cư Trinh, Q.1, Tp. Hồ Chí Minh'}
+            date={dayjs(activeDate, 'D-M-YYYY')}
+            address={activeCinemaBranch?.address}
           />
 
-          <FilmShowtimes />
+          {showtimesList.map((showtimes) => (
+            <FilmShowtimes key={showtimes.film.code} showtimes={showtimes} />
+          ))}
         </div>
       </div>
     </Fragment>
