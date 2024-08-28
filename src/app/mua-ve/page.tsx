@@ -3,6 +3,8 @@ import React, { Fragment } from 'react';
 import styles from './BuyTicket.module.scss';
 import clsx from 'clsx';
 import TicketingInfo from '@/components/Card/TicketingInfo/TicketingInfo';
+import { SeatType } from '@/constants';
+import SelectSeat from '@/view/BuyTicket/SelectSeats/SelectSeat';
 
 export default function BuyTicket() {
   return (
@@ -27,20 +29,7 @@ export default function BuyTicket() {
       </div>
 
       <div className="container">
-        <div className={styles['ticketing-grid-layout']}>
-          <div className={styles['ticketing-info-section']}>
-            <TicketingInfo />
-          </div>
-          <div className={styles['ticketing-info-section__group-action-btn']}>
-            <button className={styles['ticketing-info-section__group-action-btn__back-btn']}>
-              <Icons.ArrowLeft />
-            </button>
-            <button className={styles['ticketing-info-section__group-action-btn__continue-btn']}>
-              <span>650.000 ₫ |</span>
-              {' Tiếp tục '}
-            </button>
-          </div>
-        </div>
+        <SelectSeat />
       </div>
     </Fragment>
   );
