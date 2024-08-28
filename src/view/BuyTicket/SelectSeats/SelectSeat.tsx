@@ -1,12 +1,17 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import styles from './SelectSeat.module.scss';
 import TicketingInfo from '@/components/Card/TicketingInfo/TicketingInfo';
 import { SeatType } from '@/constants';
 import clsx from 'clsx';
+import { Modal } from 'antd';
+import dayjs from 'dayjs';
 
-const seatingLayout: any = {
+const MAX_SEAT_TO_CHOOSE = 10;
+
+const seatingLayoutOrigin: any = {
   A: [
-    { id: 1311, seatLabel: 'A1', type: 'your-choice' },
+    { id: 1311, seatLabel: 'A1', type: 'seat_normal' },
     { id: 1312, seatLabel: 'A2', type: 'seat_vip' },
     { id: 1313, seatLabel: 'A3', type: 'seat_sold' },
     { id: 1314, seatLabel: 'A4', type: 'seat_vip' },
@@ -15,8 +20,8 @@ const seatingLayout: any = {
     { id: 1317, seatLabel: 'A7', type: 'seat_vip' },
     { id: 1318, seatLabel: 'A8', type: 'seat_vip' },
     { id: 1319, seatLabel: 'A9', type: 'seat_vip' },
-    { id: 1320, seatLabel: 'A10', type: 'seat_vip' },
-    { id: 1321, seatLabel: 'A11', type: 'seat_vip' },
+    { seatLabel: null, type: 'unset' },
+    { seatLabel: null, type: 'unset' },
   ],
   B: [
     { id: 1322, seatLabel: 'B1', type: 'seat_normal' },
@@ -28,8 +33,8 @@ const seatingLayout: any = {
     { id: 1328, seatLabel: 'B7', type: 'seat_normal' },
     { id: 1329, seatLabel: 'B8', type: 'seat_normal' },
     { id: 1330, seatLabel: 'B9', type: 'seat_normal' },
-    { id: 1331, seatLabel: 'B10', type: 'seat_normal' },
-    { id: 1332, seatLabel: 'B11', type: 'seat_normal' },
+    { seatLabel: null, type: 'unset' },
+    { seatLabel: null, type: 'unset' },
   ],
   C: [
     { id: 1333, seatLabel: 'C1', type: 'seat_normal' },
@@ -41,8 +46,8 @@ const seatingLayout: any = {
     { id: 1339, seatLabel: 'C7', type: 'seat_normal' },
     { id: 1340, seatLabel: 'C8', type: 'seat_normal' },
     { id: 1341, seatLabel: 'C9', type: 'seat_normal' },
-    { id: 1342, seatLabel: 'C10', type: 'seat_normal' },
-    { id: 1343, seatLabel: 'C11', type: 'seat_normal' },
+    { seatLabel: null, type: 'unset' },
+    { seatLabel: null, type: 'unset' },
   ],
   D: [
     { id: 1344, seatLabel: 'D1', type: 'seat_normal' },
@@ -54,8 +59,8 @@ const seatingLayout: any = {
     { id: 1350, seatLabel: 'D7', type: 'seat_normal' },
     { id: 1351, seatLabel: 'D8', type: 'seat_normal' },
     { id: 1352, seatLabel: 'D9', type: 'seat_normal' },
-    { id: 1353, seatLabel: 'D10', type: 'seat_normal' },
-    { id: 1354, seatLabel: 'D11', type: 'seat_normal' },
+    { seatLabel: null, type: 'unset' },
+    { seatLabel: null, type: 'unset' },
   ],
   E: [
     { id: 1355, seatLabel: 'E1', type: 'seat_normal' },
@@ -67,8 +72,8 @@ const seatingLayout: any = {
     { id: 1361, seatLabel: 'E7', type: 'seat_normal' },
     { id: 1362, seatLabel: 'E8', type: 'seat_normal' },
     { id: 1363, seatLabel: 'E9', type: 'seat_normal' },
-    { id: 1364, seatLabel: 'E10', type: 'seat_normal' },
-    { id: 1365, seatLabel: 'E11', type: 'seat_normal' },
+    { seatLabel: null, type: 'unset' },
+    { seatLabel: null, type: 'unset' },
   ],
   F: [
     { id: 1366, seatLabel: 'F1', type: 'seat_normal' },
@@ -80,8 +85,8 @@ const seatingLayout: any = {
     { id: 1372, seatLabel: 'F7', type: 'seat_normal' },
     { id: 1373, seatLabel: 'F8', type: 'seat_normal' },
     { id: 1374, seatLabel: 'F9', type: 'seat_normal' },
-    { id: 1375, seatLabel: 'F10', type: 'seat_normal' },
-    { id: 1376, seatLabel: 'F11', type: 'seat_normal' },
+    { seatLabel: null, type: 'unset' },
+    { seatLabel: null, type: 'unset' },
   ],
   G: [
     { id: 1377, seatLabel: 'G1', type: 'seat_normal' },
@@ -155,12 +160,59 @@ const seatTypes = [
     value: 'your-choice',
   },
 ];
+export interface ISeat {
+  id?: number;
+  isSelected?: boolean;
+  seatLabel: string;
+  type: string;
+}
 
-export default function SelectSeat() {
+type SeatingLayout = {
+  [row: string]: ISeat[];
+};
+
+type Props = {
+  selectedSeats: ISeat[];
+  onSelectSeat: (seat: ISeat) => void;
+};
+
+export default function SelectSeat({ selectedSeats, onSelectSeat }: Props) {
+  const [seatingLayout, setSeatingLayout] = useState<SeatingLayout>(seatingLayoutOrigin);
+
+  const handleClickCell = (seat: ISeat, row: string) => {
+    if (selectedSeats.length === MAX_SEAT_TO_CHOOSE && !seat.isSelected) {
+      Modal.warning({
+        title: 'Cảnh báo',
+        content: 'Chỉ cho phép đặt tối đa 10 ghế trong 1 lần đặt vé.',
+      });
+      return;
+    }
+    onSelectSeat(seat);
+    handleChangeSelectedSeat(seat, row);
+  };
+  const handleChangeSelectedSeat = (seat: ISeat, row: string) => {
+    const updatedSeatingLayout = {
+      ...seatingLayout,
+      [row]: seatingLayout[row].map((item) => {
+        if (item.seatLabel === seat.seatLabel) {
+          return { ...item, isSelected: !item.isSelected };
+        }
+        return item;
+      }),
+    };
+    setSeatingLayout(updatedSeatingLayout);
+  };
+
   return (
     <div className={styles['ticketing-grid-layout']}>
       <div className={styles['ticketing-info-section']}>
-        <TicketingInfo />
+        <TicketingInfo
+          filmName={'Đẹp trai thấy sai sai'}
+          cinemaBranchName={'Cinestar Quốc Thanh'}
+          showtime={dayjs('20:45 28/08/2024')}
+          auditoriumName={'01'}
+          seats={selectedSeats.map((item) => item.seatLabel)}
+        />
         <div className={styles['ticketing-info-section__total-order']}>
           <p className={styles['ticketing-info-section__total-order__title']}>Tổng đơn hàng</p>
           <p className={styles['ticketing-info-section__total-order__price']}>0 ₫</p>
@@ -192,13 +244,14 @@ export default function SelectSeat() {
             <div className={styles['seating-layout__row']}>
               {seatingLayout[keyName].map((cell: any, index: any) => (
                 <button
+                  onClick={() => handleClickCell(cell, keyName)}
                   className={clsx(
                     styles['seating-layout__cell'],
                     cell.type === SeatType.SeatNormal && styles['seating-layout__cell--seat-normal'],
                     cell.type === SeatType.SeatVip && styles['seating-layout__cell--seat-vip'],
                     cell.type === SeatType.SeatSold && styles['seating-layout__cell--seat-sold'],
-                    cell.type === SeatType.YourChoice && styles['seating-layout__cell--your-choice'],
                     cell.type === SeatType.Unset && styles['seating-layout__cell--unset'],
+                    cell.isSelected && styles['seating-layout__cell--your-choice'],
                   )}
                 >
                   {cell.type !== SeatType.SeatSold && cell.seatLabel}

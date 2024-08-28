@@ -1,12 +1,22 @@
+'use client';
 import Icons from '@/components/Icons';
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import styles from './BuyTicket.module.scss';
 import clsx from 'clsx';
-import TicketingInfo from '@/components/Card/TicketingInfo/TicketingInfo';
-import { SeatType } from '@/constants';
-import SelectSeat from '@/view/BuyTicket/SelectSeats/SelectSeat';
+import SelectSeat, { ISeat } from '@/view/BuyTicket/SelectSeats/SelectSeat';
+import Payment from '@/view/BuyTicket/Payment/Payment';
 
 export default function BuyTicket() {
+  const [selectedSeats, setSelectedSeats] = useState<ISeat[]>([]);
+
+  const handleSelectSeat = (seat: ISeat) => {
+    if (!seat.isSelected) {
+      setSelectedSeats([...selectedSeats, seat]);
+    } else {
+      setSelectedSeats(selectedSeats.filter((item) => item.seatLabel !== seat.seatLabel));
+    }
+  };
+
   return (
     <Fragment>
       <div className={styles['wrapper']}>
@@ -29,7 +39,8 @@ export default function BuyTicket() {
       </div>
 
       <div className="container">
-        <SelectSeat />
+        {/* <SelectSeat selectedSeats={selectedSeats} onSelectSeat={handleSelectSeat} /> */}
+        <Payment />
       </div>
     </Fragment>
   );

@@ -1,0 +1,46 @@
+@use '../../../styles/variables.scss';
+
+.card {
+  border-radius: 6px;
+  border: 1px solid variables.$slate-200;
+  overflow: hidden;
+  &--mt-6 {
+    margin-top: 24px;
+  }
+
+  &__title {
+    background-color: variables.$slate-200;
+    padding: 8px 24px;
+    color: variables.$gray-400;
+  }
+  &__item {
+    display: flex;
+    padding: 8px 24px;
+    background-color: variables.$white;
+    font-size: 14px;
+    align-items: center;
+
+    &--justify-between {
+      justify-content: space-between;
+    }
+    &--gap-2 {
+      gap: 8px;
+    }
+    &--active {
+      background-color: variables.$sky-300;
+    }
+  }
+  &__divider {
+    background-color: variables.$slate-200;
+  }
+  &__header-item {
+    background-color: variables.$gray-100;
+    color: variables.$gray-400;
+    text-transform: uppercase;
+  }
+}
+
+.payment-wrap {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}

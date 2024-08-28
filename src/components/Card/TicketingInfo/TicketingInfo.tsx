@@ -1,27 +1,39 @@
 import React from 'react';
 import styles from './TicketingInfo.module.scss';
 import clsx from 'clsx';
+import dayjs, { Dayjs } from 'dayjs';
 
-export default function TicketingInfo() {
+type Props = {
+  filmName: string;
+  cinemaBranchName: string;
+  showtime: Dayjs;
+  auditoriumName: string;
+  seats: string[];
+};
+
+export default function TicketingInfo(props: Props) {
+  const { auditoriumName, cinemaBranchName, filmName, seats, showtime } = props;
   return (
     <div className={styles['ticketing-info']}>
-      <p className={styles['ticketing-info__text-truncate']}>Dep trai thay sai sai</p>
+      <p className={styles['ticketing-info__text-truncate']}>{filmName}</p>
       <p className={clsx(styles['ticketing-info__text-bold'], styles['ticketing-info__text-truncate'])}>
-        Cinestar Quoc Thanh
+        {cinemaBranchName}
       </p>
       <p className={styles['ticketing-info__text-truncate']}>
-        Suat <span className={styles['ticketing-info__text-bold']}>20:45 27/08/2024</span>
+        Suất <span className={styles['ticketing-info__text-bold']}>{dayjs(showtime).format('H:m DD:MM:YYYY')}</span>
       </p>
       <p className={styles['ticketing-info__text-truncate']}>
-        Phong chieu <span className={styles['ticketing-info__text-bold']}>02</span> - Ghe
-        <span className={styles['ticketing-info__text-bold']}>B04</span>
-        <span className={styles['ticketing-info__text-bold']}>B05</span>
-        <span className={styles['ticketing-info__text-bold']}>B05</span>
-        <span className={styles['ticketing-info__text-bold']}>B05</span>
-        <span className={styles['ticketing-info__text-bold']}>B05</span>
-        <span className={styles['ticketing-info__text-bold']}>B05</span>
-        <span className={styles['ticketing-info__text-bold']}>B05</span>
-        <span className={styles['ticketing-info__text-bold']}>B05</span>
+        Phòng chiếu <span className={styles['ticketing-info__text-bold']}>{auditoriumName}</span>
+        {' - Ghế '}
+        {seats.length > 0 ? (
+          <>
+            {seats.map((item) => (
+              <span className={styles['ticketing-info__text-bold']}>{`${item} `}</span>
+            ))}
+          </>
+        ) : (
+          '...'
+        )}
       </p>
     </div>
   );
