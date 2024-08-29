@@ -8,5 +8,9 @@ export const showtimesApi = {
     getShowtimesByDateAndCinemaBranch: async (branch: string, date: string) => {
         const response = await axiosService.get<IRespondSuccess<IShowtime[]>>(`${URL}/branch/${branch}/date/${date}`);
         return response.data;
+    },
+    getSeatLayoutForShowtime: async (showtime: string) => {
+        const response = await axiosService.get<IRespondSuccess<ISeatLayoutForShowtime>>(`${URL}/${showtime}/seating-arrangement`);
+        return response.data;
     }
 }

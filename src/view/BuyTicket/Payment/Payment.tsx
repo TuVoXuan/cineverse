@@ -4,8 +4,18 @@ import clsx from 'clsx';
 import Momo from '../../../../public/assets/images/momo_icon.png';
 import Image from 'next/image';
 import { Form, Input, Checkbox, Button } from 'antd';
+import { TicketingStep } from '@/app/mua-ve/page';
 
-export default function Payment() {
+type Props = {
+  nextStep: TicketingStep;
+  onNextStep: (step: TicketingStep) => void;
+};
+
+export default function Payment({ nextStep, onNextStep }: Props) {
+  const handleClickPayment = () => {
+    onNextStep(nextStep);
+  };
+
   return (
     <div className={styles['payment-wrap']}>
       <div className={styles['main-payment-section']}>
@@ -81,7 +91,9 @@ export default function Payment() {
           <p className={styles['total-order__content']}>54,500 đ</p>
         </div>
 
-        <button className={styles['payment-button']}>Thanh toán</button>
+        <button onClick={handleClickPayment} className={styles['payment-button']}>
+          Thanh toán
+        </button>
       </div>
     </div>
   );

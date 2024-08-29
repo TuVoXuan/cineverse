@@ -1,11 +1,15 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './SelectSeat.module.scss';
 import TicketingInfo from '@/components/Card/TicketingInfo/TicketingInfo';
 import { SeatType } from '@/constants';
 import clsx from 'clsx';
 import { Modal } from 'antd';
 import dayjs from 'dayjs';
+import toast from 'react-hot-toast';
+import { showtimesApi } from '@/api/showtimes-api';
+import { ISeat, SeatingLayout, TicketingStep } from '@/types';
+import { generateSeatLayoutObject } from '@/utils';
 
 const MAX_SEAT_TO_CHOOSE = 10;
 
@@ -160,24 +164,18 @@ const seatTypes = [
     value: 'your-choice',
   },
 ];
-export interface ISeat {
-  id?: number;
-  isSelected?: boolean;
-  seatLabel: string;
-  type: string;
-}
-
-type SeatingLayout = {
-  [row: string]: ISeat[];
-};
 
 type Props = {
+  screeningId: string;
   selectedSeats: ISeat[];
   onSelectSeat: (seat: ISeat) => void;
+  nextStep: TicketingStep;
+  onNextStep: (step: TicketingStep) => void;
 };
 
-export default function SelectSeat({ selectedSeats, onSelectSeat }: Props) {
+export default function SelectSeat({ screeningId, selectedSeats, nextStep, onSelectSeat, onNextStep }: Props) {
   const [seatingLayout, setSeatingLayout] = useState<SeatingLayout>(seatingLayoutOrigin);
+  const [auditorium, setAuditorium] = useState<IAuditorium>();
 
   const handleClickCell = (seat: ISeat, row: string) => {
     if (selectedSeats.length === MAX_SEAT_TO_CHOOSE && !seat.isSelected) {
@@ -190,6 +188,7 @@ export default function SelectSeat({ selectedSeats, onSelectSeat }: Props) {
     onSelectSeat(seat);
     handleChangeSelectedSeat(seat, row);
   };
+
   const handleChangeSelectedSeat = (seat: ISeat, row: string) => {
     const updatedSeatingLayout = {
       ...seatingLayout,
@@ -203,6 +202,38 @@ export default function SelectSeat({ selectedSeats, onSelectSeat }: Props) {
     setSeatingLayout(updatedSeatingLayout);
   };
 
+  const handleClickContinue = () => {
+    onNextStep(nextStep);
+  };
+
+  async function fetchSeatLayoutByShowtime() {
+    try {
+      const response = await showtimesApi.getSeatLayoutForShowtime(screeningId);
+      const { auditorium, seatingLayout } = response.data;
+      const generatedSeatLayout = generateSeatLayoutObject(auditorium.rows, auditorium.columns);
+      for (const key in generatedSeatLayout) {
+        for (let index = 0; index < generatedSeatLayout[key].length; index++) {
+          const existCell = seatingLayout[key].find((cell) => cell.x_position === index);
+          if (existCell) {
+            generatedSeatLayout[key][index] = {
+              id: existCell.id,
+              seatLabel: existCell.label,
+              type: existCell.seat_type,
+            };
+          }
+        }
+      }
+      setSeatingLayout(generatedSeatLayout);
+      setAuditorium(auditorium);
+    } catch (error) {
+      toast.error((error as IRespondError)?.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchSeatLayoutByShowtime();
+  }, [screeningId]);
+
   return (
     <div className={styles['ticketing-grid-layout']}>
       <div className={styles['ticketing-info-section']}>
@@ -211,14 +242,17 @@ export default function SelectSeat({ selectedSeats, onSelectSeat }: Props) {
           cinemaBranchName={'Cinestar Quốc Thanh'}
           showtime={dayjs('20:45 28/08/2024')}
           auditoriumName={'01'}
-          seats={selectedSeats.map((item) => item.seatLabel)}
+          seats={selectedSeats.map((item) => item.seatLabel || '')}
         />
         <div className={styles['ticketing-info-section__total-order']}>
           <p className={styles['ticketing-info-section__total-order__title']}>Tổng đơn hàng</p>
           <p className={styles['ticketing-info-section__total-order__price']}>0 ₫</p>
         </div>
         <div className={styles['ticketing-info-section__group-action-btn']}>
-          <button className={styles['ticketing-info-section__group-action-btn__continue-btn']}>
+          <button
+            onClick={handleClickContinue}
+            className={styles['ticketing-info-section__group-action-btn__continue-btn']}
+          >
             <span>650.000 ₫ |</span>
             {' Tiếp tục '}
           </button>
@@ -241,7 +275,12 @@ export default function SelectSeat({ selectedSeats, onSelectSeat }: Props) {
         <div className={styles['seating-layout__monitor']}>Màn hình</div>
         <div className={styles['seating-layout']}>
           {Object.keys(seatingLayout).map((keyName, i) => (
-            <div className={styles['seating-layout__row']}>
+            <div
+              className={clsx(
+                styles['seating-layout__row'],
+                auditorium?.seat_direction === 'RTL' && styles['seating-layout__row--flex-row-reverse'],
+              )}
+            >
               {seatingLayout[keyName].map((cell: any, index: any) => (
                 <button
                   onClick={() => handleClickCell(cell, keyName)}

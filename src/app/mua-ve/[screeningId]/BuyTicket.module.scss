@@ -1,5 +1,5 @@
-@use '../../styles/variables.scss';
-@import '../../styles/responsive.scss';
+@use '../../../styles/variables.scss';
+@import '../../../styles/responsive.scss';
 
 .wrapper {
   background-color: variables.$white;

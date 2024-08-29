@@ -5,3 +5,9 @@ export const SeatType = {
   YourChoice: 'your-choice',
   SeatSold: 'seat_sold',
 };
+
+export const AppPath = {
+  Home: '/',
+  Showtimes: '/lich-chieu',
+  BuyTicket: '/mua-ve',
+};

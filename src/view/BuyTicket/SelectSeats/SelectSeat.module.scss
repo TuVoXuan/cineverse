@@ -94,6 +94,7 @@
       align-items: center;
       gap: 8px;
       font-size: 14px;
+
       &__sample {
         height: 25px;
         width: 25px;
@@ -146,6 +147,10 @@
     display: flex;
     gap: 8px;
     margin: auto;
+
+    &--flex-row-reverse {
+      flex-direction: row-reverse;
+    }
   }
 
   &__cell {
