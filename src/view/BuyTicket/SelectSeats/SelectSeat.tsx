@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 import { showtimesApi } from '@/api/showtimes-api';
 import { ISeat, SeatingLayout, TicketingStep } from '@/types';
 import { generateSeatLayoutObject } from '@/utils';
+import useResponsive from '@/hooks/useResponsive';
 
 const MAX_SEAT_TO_CHOOSE = 10;
 
@@ -171,11 +172,22 @@ type Props = {
   onSelectSeat: (seat: ISeat) => void;
   nextStep: TicketingStep;
   onNextStep: (step: TicketingStep) => void;
+  totalPrices: number;
+  onSetTicketPrice: (ticketPrices: ITicketPrice[]) => void;
 };
 
-export default function SelectSeat({ screeningId, selectedSeats, nextStep, onSelectSeat, onNextStep }: Props) {
+export default function SelectSeat({
+  screeningId,
+  selectedSeats,
+  nextStep,
+  totalPrices,
+  onSelectSeat,
+  onNextStep,
+  onSetTicketPrice,
+}: Props) {
   const [seatingLayout, setSeatingLayout] = useState<SeatingLayout>(seatingLayoutOrigin);
   const [auditorium, setAuditorium] = useState<IAuditorium>();
+  const screenDevice = useResponsive();
 
   const handleClickCell = (seat: ISeat, row: string) => {
     if (selectedSeats.length === MAX_SEAT_TO_CHOOSE && !seat.isSelected) {
@@ -203,13 +215,20 @@ export default function SelectSeat({ screeningId, selectedSeats, nextStep, onSel
   };
 
   const handleClickContinue = () => {
+    if (selectedSeats.length === 0) {
+      Modal.warning({
+        title: 'Cảnh báo',
+        content: 'Vui lòng chọn ít nhất 1 ghế để tiếp thục thanh toán.',
+      });
+      return;
+    }
     onNextStep(nextStep);
   };
 
   async function fetchSeatLayoutByShowtime() {
     try {
       const response = await showtimesApi.getSeatLayoutForShowtime(screeningId);
-      const { auditorium, seatingLayout } = response.data;
+      const { auditorium, seatingLayout, ticketPrices } = response.data;
       const generatedSeatLayout = generateSeatLayoutObject(auditorium.rows, auditorium.columns);
       for (const key in generatedSeatLayout) {
         for (let index = 0; index < generatedSeatLayout[key].length; index++) {
@@ -225,6 +244,7 @@ export default function SelectSeat({ screeningId, selectedSeats, nextStep, onSel
       }
       setSeatingLayout(generatedSeatLayout);
       setAuditorium(auditorium);
+      onSetTicketPrice(ticketPrices);
     } catch (error) {
       toast.error((error as IRespondError)?.message);
     }
@@ -246,14 +266,16 @@ export default function SelectSeat({ screeningId, selectedSeats, nextStep, onSel
         />
         <div className={styles['ticketing-info-section__total-order']}>
           <p className={styles['ticketing-info-section__total-order__title']}>Tổng đơn hàng</p>
-          <p className={styles['ticketing-info-section__total-order__price']}>0 ₫</p>
+          <p className={styles['ticketing-info-section__total-order__price']}>
+            {new Intl.NumberFormat('vi-VN').format(totalPrices)} ₫
+          </p>
         </div>
         <div className={styles['ticketing-info-section__group-action-btn']}>
           <button
             onClick={handleClickContinue}
             className={styles['ticketing-info-section__group-action-btn__continue-btn']}
           >
-            <span>650.000 ₫ |</span>
+            {screenDevice === 'xs' && <span>{new Intl.NumberFormat('vi-VN').format(totalPrices)} ₫ |</span>}
             {' Tiếp tục '}
           </button>
         </div>

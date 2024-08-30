@@ -28,17 +28,27 @@ const TicketingSteps: TicketingStep[] = [
 export default function BuyTicket({ params }: { params: { screeningId: string } }) {
   const [selectedSeats, setSelectedSeats] = useState<ISeat[]>([]);
   const [activeStep, setActiveStep] = useState<string>('chon-ghe');
+  const [totalPrices, setTotalPrices] = useState<number>(0);
+  const [ticketPrices, setTicketPrices] = useState<ITicketPrice[]>([]);
 
   const handleSelectSeat = (seat: ISeat) => {
     if (!seat.isSelected) {
       setSelectedSeats([...selectedSeats, seat]);
+      const ticketPrice = ticketPrices.find((item) => item.seat_type === seat.type)?.price || 0;
+      setTotalPrices(totalPrices + ticketPrice);
     } else {
       setSelectedSeats(selectedSeats.filter((item) => item.seatLabel !== seat.seatLabel));
+      const ticketPrice = ticketPrices.find((item) => item.seat_type === seat.type)?.price || 0;
+      setTotalPrices(totalPrices - ticketPrice);
     }
   };
 
   const handleChangeStep = (step: TicketingStep) => {
     setActiveStep(step.code);
+  };
+
+  const handleSetTicketPrice = (value: ITicketPrice[]) => {
+    setTicketPrices(value);
   };
 
   return (
@@ -65,14 +75,24 @@ export default function BuyTicket({ params }: { params: { screeningId: string } 
       <div className="container">
         {activeStep === 'chon-ghe' && (
           <SelectSeat
+            totalPrices={totalPrices}
             screeningId={params.screeningId}
             nextStep={TicketingSteps[1]}
             onNextStep={handleChangeStep}
             selectedSeats={selectedSeats}
             onSelectSeat={handleSelectSeat}
+            onSetTicketPrice={handleSetTicketPrice}
           />
         )}
-        {activeStep === 'thanh-toan' && <Payment nextStep={TicketingSteps[2]} onNextStep={handleChangeStep} />}
+        {activeStep === 'thanh-toan' && (
+          <Payment
+            selectedSeats={selectedSeats}
+            ticketPrices={ticketPrices}
+            totalPrice={totalPrices}
+            nextStep={TicketingSteps[2]}
+            onNextStep={handleChangeStep}
+          />
+        )}
       </div>
     </Fragment>
   );

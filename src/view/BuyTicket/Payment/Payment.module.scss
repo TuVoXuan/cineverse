@@ -43,7 +43,8 @@
     color: variables.$gray-400;
   }
   &__item {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     padding: 8px 24px;
     background-color: variables.$white;
     font-size: 14px;
@@ -51,6 +52,12 @@
 
     &--justify-between {
       justify-content: space-between;
+    }
+    &--text-center {
+      text-align: center;
+    }
+    &--text-right {
+      text-align: right;
     }
     &--gap-2 {
       gap: 8px;

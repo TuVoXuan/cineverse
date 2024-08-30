@@ -45,7 +45,15 @@ declare interface ISeatLayoutDB {
     [row: string] : ISeatDB[]
 }
 
+declare interface ITicketPrice {
+    id: number,
+    screening_id: number,
+    seat_type: string,
+    price: number
+}
+
 declare interface ISeatLayoutForShowtime {
     seatingLayout: ISeatLayoutDB;
-    auditorium: IAuditorium
+    auditorium: IAuditorium,
+    ticketPrices: ITicketPrice[]
 }
