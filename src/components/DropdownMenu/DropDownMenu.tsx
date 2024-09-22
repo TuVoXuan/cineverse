@@ -19,7 +19,7 @@ export default function DropDownMenu({ title, items, className, isPopup }: props
   const ref = useRef<HTMLDivElement>(null);
 
   const onToggleShow = (event: React.MouseEvent) => {
-    event.stopPropagation();
+    event.stopPropagation();  
     setShow(!show);
   };
 

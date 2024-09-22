@@ -43,12 +43,20 @@
     color: variables.$gray-400;
   }
   &__item {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
     padding: 8px 24px;
     background-color: variables.$white;
     font-size: 14px;
     align-items: center;
+
+    &--grid {
+      display: grid;
+    }
+    &--grid-col-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    &--flex {
+      display: flex;
+    }
 
     &--justify-between {
       justify-content: space-between;
@@ -121,4 +129,10 @@
 .form-grid {
   display: grid;
   gap: 12px;
+
+  &__input-wrap {
+    label {
+      font-size: 14px;
+    }
+  }
 }

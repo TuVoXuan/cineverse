@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.0.1",
+    "@hookform/resolvers": "^3.9.0",
     "antd": "^5.20.1",
     "axios": "^1.7.5",
     "clsx": "^2.1.1",
@@ -18,8 +19,10 @@
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.53.0",
     "react-hot-toast": "^2.4.1",
-    "swiper": "^11.1.9"
+    "swiper": "^11.1.9",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/node": "^20",

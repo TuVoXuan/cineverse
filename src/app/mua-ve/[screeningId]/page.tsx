@@ -1,11 +1,15 @@
 'use client';
 import Icons from '@/components/Icons';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import styles from './BuyTicket.module.scss';
 import clsx from 'clsx';
 import SelectSeat from '@/view/BuyTicket/SelectSeats/SelectSeat';
 import Payment from '@/view/BuyTicket/Payment/Payment';
 import { ISeat, TicketingStep } from '@/types';
+import TicketInfo from '@/view/BuyTicket/TicketInfo/TicketInfo';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { orderApi } from '@/api/order-api';
+import toast from 'react-hot-toast';
 
 const TicketingSteps: TicketingStep[] = [
   {
@@ -27,9 +31,13 @@ const TicketingSteps: TicketingStep[] = [
 
 export default function BuyTicket({ params }: { params: { screeningId: string } }) {
   const [selectedSeats, setSelectedSeats] = useState<ISeat[]>([]);
-  const [activeStep, setActiveStep] = useState<string>('chon-ghe');
   const [totalPrices, setTotalPrices] = useState<number>(0);
   const [ticketPrices, setTicketPrices] = useState<ITicketPrice[]>([]);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const activeStep = searchParams.get('step');
+  const loading = searchParams.get('loading');
 
   const handleSelectSeat = (seat: ISeat) => {
     if (!seat.isSelected) {
@@ -43,13 +51,49 @@ export default function BuyTicket({ params }: { params: { screeningId: string } 
     }
   };
 
-  const handleChangeStep = (step: TicketingStep) => {
-    setActiveStep(step.code);
-  };
-
   const handleSetTicketPrice = (value: ITicketPrice[]) => {
     setTicketPrices(value);
   };
+
+  const handleChangeStep = (step: TicketingStep, clearParams?: boolean) => {
+    const params = new URLSearchParams(clearParams ? '' : searchParams);
+    params.set('step', step.code);
+    const queryString = params.toString();
+    const updatePath = queryString ? `${pathname}?${queryString}` : pathname;
+    router.push(updatePath);
+  };
+
+  const checkMomoPaymentProcess = async () => {
+    try {
+      const orderId = searchParams.get('orderId');
+      if (orderId) {
+        const response = await orderApi.checkOrderPaymentMomoProcess(orderId.split('cnv_order_')[1]);
+        if (response.data) {
+          handleChangeStep(TicketingSteps[2]);
+        } else {
+          toast.error('Thanh toán đơn hàng với Momo thất bại.');
+          setTimeout(() => {
+            handleChangeStep(TicketingSteps[0], true);
+          }, 3000);
+        }
+      }
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+
+  useEffect(() => {
+    const step = searchParams.get('step');
+    if (!step) {
+      handleChangeStep(TicketingSteps[0]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (loading) {
+      checkMomoPaymentProcess();
+    }
+  }, [loading]);
 
   return (
     <Fragment>
@@ -73,7 +117,16 @@ export default function BuyTicket({ params }: { params: { screeningId: string } 
       </div>
 
       <div className="container">
-        {activeStep === 'chon-ghe' && (
+        {loading && (
+          <div className={styles['loading-wrap']}>
+            <Icons.LoadingHorizontal className={styles['loading']} />
+            <div>
+              <p>Đơn hàng của bạn đang được xử lý.</p>
+              <p>Vui lòng đợi xong giây lát.</p>
+            </div>
+          </div>
+        )}
+        {!loading && activeStep === 'chon-ghe' && (
           <SelectSeat
             totalPrices={totalPrices}
             screeningId={params.screeningId}
@@ -84,15 +137,17 @@ export default function BuyTicket({ params }: { params: { screeningId: string } 
             onSetTicketPrice={handleSetTicketPrice}
           />
         )}
-        {activeStep === 'thanh-toan' && (
+        {!loading && activeStep === 'thanh-toan' && (
           <Payment
             selectedSeats={selectedSeats}
             ticketPrices={ticketPrices}
             totalPrice={totalPrices}
             nextStep={TicketingSteps[2]}
+            screeningId={params.screeningId}
             onNextStep={handleChangeStep}
           />
         )}
+        {!loading && activeStep === 'thong-tin-ve' && <TicketInfo />}
       </div>
     </Fragment>
   );

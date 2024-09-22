@@ -16,6 +16,7 @@ import CreditCard from './CreditCard';
 import GridLayout from './GridLayout';
 import Box from './Box';
 import ArrowLeft from './ArrowLeft';
+import LoadingHorizontal from './LoadingHorizontal';
 
 const Icons = {
   MapPin,
@@ -36,6 +37,7 @@ const Icons = {
   GridLayout,
   Box,
   ArrowLeft,
+  LoadingHorizontal,
 };
 
 export default Icons;

@@ -55,6 +55,13 @@
       @include respond-to(sm) {
         width: fit-content;
       }
+
+      span {
+        display: inline-block;
+        @include respond-to(sm) {
+          display: none;
+        }
+      }
     }
 
     &__back-btn:hover,
