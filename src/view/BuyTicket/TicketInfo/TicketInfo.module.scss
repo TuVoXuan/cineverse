@@ -49,3 +49,19 @@
     font-weight: 600;
   }
 }
+
+.back-to-home-button {
+  border-radius: 6px;
+  text-align: center;
+  padding: 8px 16px;
+  background-color: variables.$slate-700;
+  color: variables.$white;
+  width: fit-content;
+  margin-top: 32px;
+  @include respond-to(lg) {
+    margin-top: 46px;
+  }
+  @include respond-to(xl) {
+    margin-top: 52px;
+  }
+}

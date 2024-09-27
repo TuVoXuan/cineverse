@@ -1,0 +1,148 @@
+@use '../../../styles/variables.scss';
+@import '../../../styles/responsive.scss';
+
+.film-info-wrap {
+  position: relative;
+  z-index: 1;
+
+  &::after {
+    background-color: rgba(variables.$black, 0.7);
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+  }
+
+  &__bg-img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -1;
+  }
+
+  &__wrap {
+    padding: 12px;
+
+    @include respond-to(sm) {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 12px;
+    }
+    @include respond-to(lg) {
+      gap: 24px;
+    }
+  }
+
+  &__thumbnail {
+    display: none;
+    border: 1px solid variables.$white;
+    border-radius: 10px;
+    overflow: hidden;
+    height: fit-content;
+
+    img {
+      height: auto;
+      width: 100%;
+      object-fit: contain;
+    }
+
+    @include respond-to(sm) {
+      display: block;
+      grid-column: span 2 / span 2;
+    }
+  }
+
+  &__info {
+    color: variables.$white;
+    @include respond-to(sm) {
+      grid-column: span 10 / span 10;
+    }
+  }
+}
+
+.title-section {
+  margin-bottom: 12px;
+
+  &__film-name {
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    @include respond-to(sm) {
+      text-align: left;
+    }
+  }
+
+  &__genres {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+    color: variables.$slate-500;
+    font-size: 15px;
+    @include respond-to(sm) {
+      text-align: left;
+    }
+  }
+}
+
+.desc-section {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 12px;
+
+  @include respond-to(lg) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 24px;
+  }
+}
+
+.film-info {
+  @include respond-to(lg) {
+    grid-column: span 7 / span 7;
+  }
+  &__btn-group {
+    display: flex;
+    justify-content: center;
+    column-gap: 4px;
+    align-items: center;
+    margin-bottom: 12px;
+    @include respond-to(sm) {
+      justify-content: unset;
+    }
+  }
+  &__desc {
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+  &__overview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.cast-crew-list {
+  @include respond-to(lg) {
+    grid-column: span 5 / span 5;
+  }
+}
+
+.cast-crew {
+  margin-bottom: 6px;
+  &__title {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  &__content {
+    color: variables.$white;
+    font-size: 15px;
+    span {
+      color: variables.$red-500;
+    }
+  }
+}

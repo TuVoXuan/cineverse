@@ -3,6 +3,8 @@ import styles from './TicketInfo.module.scss';
 import { useSearchParams } from 'next/navigation';
 import { orderApi } from '@/api/order-api';
 import dayjs from 'dayjs';
+import Link from 'next/link';
+import { AppPath } from '@/constants';
 
 export default function TicketInfo() {
   const searchParams = useSearchParams();
@@ -48,6 +50,10 @@ export default function TicketInfo() {
             {orderInfo && orderInfo.ticket_order_items.map((ticket) => ticket.seating_arrangement.label).join(', ')}
           </span>
         </p>
+      </div>
+
+      <div className={styles['back-to-home-button']}>
+        <Link href={AppPath.Home}>Quay về trang chủ</Link>
       </div>
     </div>
   );

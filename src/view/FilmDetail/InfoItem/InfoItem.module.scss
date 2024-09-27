@@ -1,0 +1,19 @@
+@use '../../../styles/variables.scss';
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.5;
+  color: variables.$white;
+  font-size: 15px;
+
+  &__label-wrap {
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+    &__icon {
+      height: 15px;
+      width: 15px;
+    }
+  }
+}

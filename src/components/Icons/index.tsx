@@ -17,6 +17,9 @@ import GridLayout from './GridLayout';
 import Box from './Box';
 import ArrowLeft from './ArrowLeft';
 import LoadingHorizontal from './LoadingHorizontal';
+import Calendar from './Calendar';
+import Clock from './Clock';
+import UserCheck from './UserCheck';
 
 const Icons = {
   MapPin,
@@ -38,6 +41,9 @@ const Icons = {
   Box,
   ArrowLeft,
   LoadingHorizontal,
+  Calendar,
+  Clock,
+  UserCheck,
 };
 
 export default Icons;
