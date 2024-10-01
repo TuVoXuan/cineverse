@@ -29,14 +29,6 @@ export default function ShowtimeSchedule({ title, schedule, className }: props) 
             )}
           >
             <span className={styles['showtime-schedule__item__timing']}>{item.time.format('HH:mm')}</span>
-            {/* <span
-              className={clsx(
-                styles['showtime-schedule__item__price'],
-                dayjs().isAfter(item.time) && styles['showtime-schedule__item__price--hidden'],
-              )}
-            >
-              {item.price}K
-            </span> */}
           </Link>
         ))}
       </div>

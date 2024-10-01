@@ -20,6 +20,8 @@ import LoadingHorizontal from './LoadingHorizontal';
 import Calendar from './Calendar';
 import Clock from './Clock';
 import UserCheck from './UserCheck';
+import Ticket from './Ticket';
+import ChevronRight from './ChevronRight';
 
 const Icons = {
   MapPin,
@@ -44,6 +46,8 @@ const Icons = {
   Calendar,
   Clock,
   UserCheck,
+  Ticket,
+  ChevronRight,
 };
 
 export default Icons;

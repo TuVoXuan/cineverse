@@ -10,6 +10,8 @@ export const AppPath = {
   Home: '/',
   Showtimes: '/lich-chieu',
   BuyTicket: '/mua-ve',
+  Film: '/phim',
+  Review: '/review',
 };
 
 export const EmailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;

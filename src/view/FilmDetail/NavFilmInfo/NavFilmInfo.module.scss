@@ -1,0 +1,54 @@
+@use '../../../styles/variables.scss';
+@import '../../../styles/responsive.scss';
+
+.nav-wrap {
+  background-color: variables.$white;
+  border-bottom: 1px solid variables.$gray-300;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  flex-wrap: wrap;
+
+  &__item {
+    margin: 0 12px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__link {
+    display: block;
+    text-align: center;
+    padding: 16px 0;
+    color: variables.$slate-500;
+    font-size: 15px;
+    white-space: nowrap;
+    @include respond-to(sm) {
+      font-size: 15px;
+    }
+
+    &.active {
+      border-bottom: 1px solid variables.$blue-500;
+      color: variables.$black;
+    }
+  }
+}
+
+.content-wrap {
+  background-color: variables.$gray-50;
+
+  & > div {
+    margin-top: 12px;
+  }
+}

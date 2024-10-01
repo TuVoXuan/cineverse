@@ -1,0 +1,34 @@
+@use '../../../../styles/variables.scss';
+
+.group-article {
+}
+
+.title {
+  padding: 16px;
+  font-size: 15px;
+  background-color: variables.$slate-200;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.content {
+  background-color: variables.$white;
+  padding: 16px;
+  border: 1px solid variables.$slate-100;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.load-more-btn {
+  margin-top: 12px;
+  background-color: variables.$slate-200;
+  border-radius: 6px;
+  width: 100%;
+  border: 1px solid variables.$slate-100;
+  transition: all 0.2s linear;
+  padding: 8px 12px;
+
+  &:hover {
+    background-color: variables.$slate-300;
+  }
+}

@@ -1,11 +1,11 @@
+import React from 'react';
+import styles from './FilmInfo.module.scss';
+import clsx from 'clsx';
 import Button from '@/components/Button/Button';
 import Icons from '@/components/Icons';
-import InfoItem from '@/view/FilmDetail/InfoItem/InfoItem';
-import React from 'react';
-import styles from './FilmDetail.module.scss';
-import clsx from 'clsx';
+import InfoItem from '../InfoItem/InfoItem';
 
-export default function FilmDetail() {
+export default function FilmInfo() {
   return (
     <div className={styles['film-info-wrap']}>
       <img

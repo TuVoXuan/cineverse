@@ -14,9 +14,10 @@ dayjs.updateLocale('en', {
 type props = {
   activeDate: string | undefined;
   onChange: (value: string) => void;
+  className?: string;
 };
 
-export default function WeekdayNavigator({ activeDate, onChange }: props) {
+export default function WeekdayNavigator({ activeDate, onChange, className }: props) {
   const [weekdays, setWeekdays] = useState<any>([]);
 
   const handleClickDate = (date: any) => {
@@ -42,7 +43,7 @@ export default function WeekdayNavigator({ activeDate, onChange }: props) {
   }, []);
 
   return (
-    <div className={styles.weekdays}>
+    <div className={clsx(styles.weekdays, className)}>
       {weekdays.map((item: any) => (
         <div
           key={item.date}

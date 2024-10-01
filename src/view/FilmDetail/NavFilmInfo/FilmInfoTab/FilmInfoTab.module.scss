@@ -1,0 +1,68 @@
+@use '../../../../styles/variables.scss';
+@import '../../../../styles/responsive.scss';
+
+.wrap {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  @include respond-to(sm) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+.content-wrap {
+  @include respond-to(sm) {
+    grid-column: span 8 / span 8;
+  }
+}
+
+.trailer {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  margin-bottom: 24px;
+  padding-bottom: 58%;
+
+  iframe {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.related-post {
+  margin-bottom: 24px;
+}
+
+.comment-title {
+  font-size: 20px;
+  margin-bottom: 18px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.comment-list {
+  margin-bottom: 12px;
+  & > div {
+    margin-bottom: 12px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.view-more-btn {
+  background-color: variables.$slate-400;
+  color: variables.$slate-700;
+  width: 100%;
+  cursor: pointer;
+  font-size: 15px;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.comment-section {
+  margin-bottom: 12px;
+}

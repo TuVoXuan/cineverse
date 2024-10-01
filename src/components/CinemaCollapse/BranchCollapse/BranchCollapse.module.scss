@@ -1,0 +1,44 @@
+@use '../../../styles/variables.scss';
+
+.wrap {
+  padding: 12px 20px;
+  background-color: variables.$white;
+  border: 1px solid variables.$slate-100;
+}
+
+.title-wrap {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 500ms ease-out;
+
+  &__content {
+    overflow: hidden;
+  }
+
+  &.expand {
+    grid-template-rows: 1fr;
+  }
+}
+
+.address {
+  font-size: 13px;
+  margin-bottom: 12px;
+  color: variables.$gray-400;
+}
+
+.text-link {
+  color: variables.$blue-500;
+}
+
+.showtimes-wrap {
+  & > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+}
