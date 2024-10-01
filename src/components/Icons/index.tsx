@@ -12,6 +12,16 @@ import Heart from './Heart';
 import Star from './Star';
 import ExclamationCircle from './ExclamationCircle';
 import CheckCircle from './CheckCircle';
+import CreditCard from './CreditCard';
+import GridLayout from './GridLayout';
+import Box from './Box';
+import ArrowLeft from './ArrowLeft';
+import LoadingHorizontal from './LoadingHorizontal';
+import Calendar from './Calendar';
+import Clock from './Clock';
+import UserCheck from './UserCheck';
+import Ticket from './Ticket';
+import ChevronRight from './ChevronRight';
 
 const Icons = {
   MapPin,
@@ -28,6 +38,16 @@ const Icons = {
   Star,
   ExclamationCircle,
   CheckCircle,
+  CreditCard,
+  GridLayout,
+  Box,
+  ArrowLeft,
+  LoadingHorizontal,
+  Calendar,
+  Clock,
+  UserCheck,
+  Ticket,
+  ChevronRight,
 };
 
 export default Icons;

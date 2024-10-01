@@ -1,0 +1,217 @@
+@use '../../../styles/variables.scss';
+@import '../../../styles/responsive.scss';
+
+.ticketing-grid-layout {
+  display: grid;
+  gap: 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+
+  @include respond-to(lg) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+.ticketing-info-section {
+  @include respond-to(lg) {
+    grid-column: span 4 / span 4;
+    order: 13;
+  }
+  &__total-order {
+    display: none;
+    padding: 24px;
+    background-color: variables.$white;
+    border-radius: 6px;
+    border: 1px solid variables.$slate-100;
+    font-size: 15px;
+    margin-top: 12px;
+
+    @include respond-to(sm) {
+      display: block;
+    }
+
+    &__title {
+      text-transform: uppercase;
+      color: variables.$gray-400;
+    }
+    &__price {
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+  &__group-action-btn {
+    display: flex;
+    justify-content: end;
+    margin-top: 12px;
+
+    &__continue-btn {
+      border-radius: 6px;
+      text-align: center;
+      padding: 8px 16px;
+      background-color: variables.$slate-700;
+      color: variables.$white;
+      width: 100%;
+      @include respond-to(sm) {
+        width: fit-content;
+      }
+
+      span {
+        display: inline-block;
+        @include respond-to(sm) {
+          display: none;
+        }
+      }
+    }
+
+    &__back-btn:hover,
+    &__continue-btn:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.seating-section {
+  @include respond-to(lg) {
+    grid-column: span 8 / span 8;
+  }
+}
+
+.seating-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  position: relative;
+
+  &__group-seat-type {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 12px;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+
+    &__type {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+
+      &__sample {
+        height: 25px;
+        width: 25px;
+        border-radius: 4px;
+
+        @include respond-to(sm) {
+          height: 30px;
+          width: 30px;
+        }
+        &--seat-normal {
+          background-color: variables.$purple-200;
+        }
+        &--seat-vip {
+          background-color: variables.$pink-200;
+        }
+        &--your-choice {
+          background-color: variables.$pink-500;
+        }
+        &--seat-sold {
+          position: relative;
+          background-color: variables.$gray-200;
+          border: 1px solid variables.$slate-200;
+          pointer-events: none;
+
+          &::after {
+            position: absolute;
+            content: 'X';
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: variables.$gray-400;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
+  &__monitor {
+    padding: 4px 12px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    background-color: variables.$slate-200;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  &__row {
+    display: flex;
+    gap: 8px;
+    margin: auto;
+
+    &--flex-row-reverse {
+      flex-direction: row-reverse;
+    }
+  }
+
+  &__cell {
+    flex-shrink: 0;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+    transition: all 0.3s linear;
+    font-size: 11px;
+    font-weight: 500;
+    box-sizing: border-box;
+
+    @include respond-to(sm) {
+      height: 30px;
+      width: 30px;
+      font-size: 12px;
+    }
+
+    &--unset {
+      background-color: transparent;
+      pointer-events: none;
+    }
+    &--seat-normal {
+      background-color: variables.$purple-200;
+      color: variables.$purple-500;
+    }
+    &--seat-vip {
+      background-color: variables.$pink-200;
+      color: variables.$pink-500;
+    }
+    &--your-choice {
+      background-color: variables.$pink-500;
+      color: variables.$white;
+    }
+    &--seat-sold {
+      position: relative;
+      background-color: variables.$gray-200;
+      border: 1px solid variables.$slate-200;
+      pointer-events: none;
+      font-weight: 400 !important;
+
+      &::after {
+        position: absolute;
+        content: 'X';
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: variables.$gray-400;
+        font-size: 14px;
+      }
+    }
+  }
+}

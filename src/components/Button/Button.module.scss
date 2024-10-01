@@ -1,0 +1,42 @@
+@use '../../styles/variables.scss';
+
+.button-wrap {
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  column-gap: 4px;
+  line-height: 1.75;
+
+  &.white {
+    &.contained {
+      color: variables.$slate-800;
+      background-color: variables.$white;
+    }
+    &.outlined {
+      color: variables.$white;
+      border: 1px solid variables.$white;
+    }
+  }
+  &.red {
+    &.contained {
+      color: variables.$white;
+      background-color: variables.$red-500;
+    }
+    &.outlined {
+      color: variables.$red-500;
+      border: 1px solid variables.$red-500;
+    }
+  }
+  &.slate {
+    &.contained {
+      color: variables.$slate-800;
+      background-color: variables.$slate-400;
+    }
+    &.outlined {
+      color: variables.$slate-400;
+      border: 1px solid variables.$slate-400;
+    }
+  }
+}

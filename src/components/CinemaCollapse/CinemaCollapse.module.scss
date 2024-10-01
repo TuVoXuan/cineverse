@@ -1,0 +1,55 @@
+@use '../../styles/variables.scss';
+
+.title-wrap {
+  display: flex;
+  align-items: center;
+  background-color: variables.$gray-200;
+  padding: 12px 20px;
+  border-bottom: 1px solid variables.$slate-200;
+
+  &__logo {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+      height: auto;
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &__info {
+    flex: 1;
+    padding: 0 12px;
+    &__name {
+      font-size: 15px;
+      font-weight: 600;
+    }
+    &__branches {
+      font-size: 13px;
+      color: variables.$gray-400;
+    }
+  }
+
+  &__icon {
+    height: 17px;
+    width: 17px;
+    color: variables.$gray-400;
+  }
+}
+
+.body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 500ms ease-out;
+
+  &__content {
+    overflow: hidden;
+  }
+
+  &.expand {
+    grid-template-rows: 1fr;
+  }
+}

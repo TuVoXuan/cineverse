@@ -1,0 +1,79 @@
+@use '../../../styles/variables.scss';
+
+.wrapper {
+  background-color: variables.$white;
+  border: 1px solid variables.$slate-200;
+  border-radius: 6px;
+  box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03);
+  padding: 16px;
+}
+
+.head-comment {
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+}
+
+.avatar-wrap {
+  position: relative;
+
+  &__ticket-mini {
+    position: absolute;
+    background-color: variables.$red-500;
+    color: variables.$white;
+    height: 20px;
+    width: 20px;
+    top: 100%;
+    left: 100%;
+    transform: translate(-80%, -80%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+
+    &__icon {
+      height: 12px;
+      width: 12px;
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+.avatar {
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+
+  img {
+    height: auto;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.name {
+  font-size: 15px;
+  font-weight: 500;
+
+  &__rate {
+    &__icon {
+      display: inline-block;
+      height: 16px;
+      width: 16px;
+      color: variables.$yellow-500;
+      margin-bottom: 5px;
+    }
+  }
+}
+
+.time-age {
+  font-size: 13px;
+  color: variables.$gray-300;
+}
+
+.comment {
+  margin-top: 12px;
+  font-size: 15px;
+}

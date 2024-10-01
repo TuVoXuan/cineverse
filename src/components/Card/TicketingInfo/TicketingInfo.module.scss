@@ -1,0 +1,19 @@
+@use '../../../styles/variables.scss';
+
+.ticketing-info {
+  background-color: variables.$white;
+  border: 1px solid variables.$slate-100;
+  border-radius: 6px;
+  font-size: 15px;
+  padding: 16px;
+
+  &__text-bold {
+    color: variables.$zinc-800;
+    font-weight: 600;
+  }
+  &__text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
