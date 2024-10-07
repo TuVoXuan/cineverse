@@ -1,29 +1,34 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styles from './FilmInfo.module.scss';
 import clsx from 'clsx';
 import Button from '@/components/Button/Button';
 import Icons from '@/components/Icons';
 import InfoItem from '../InfoItem/InfoItem';
+import dayjs from 'dayjs';
 
-export default function FilmInfo() {
+interface Props {
+  filmDetail: IFilmDetail;
+}
+
+export default function FilmInfo({ filmDetail }: Props) {
   return (
     <div className={styles['film-info-wrap']}>
       <img
         className={styles['film-info-wrap__bg-img']}
-        src="https://cdn.moveek.com/storage/media/cache/full/66cff84e96ee5674743041.jpg"
-        alt="film-background"
+        src={filmDetail.thumbnail_bg.url}
+        alt={`${filmDetail.code}-bg-img`}
       />
       <div className={clsx('container', styles['film-info-wrap__wrap'])}>
         <div className={styles['film-info-wrap__thumbnail']}>
-          <img src="https://cdn.moveek.com/storage/media/cache/tall/66e667a965631887716128.png" alt="film-thumbnail" />
+          <img src={filmDetail.thumbnail.url} alt={`${filmDetail.code}-thumbnail`} />
         </div>
         <div className={styles['film-info-wrap__info']}>
           <div className={styles['title-section']}>
-            <h1 className={styles['title-section__film-name']}>Anh Trai Vượt Mọi Tam Tai</h1>
+            <h1 className={styles['title-section__film-name']}>{filmDetail.title}</h1>
             <p className={styles['title-section__genres']}>
-              <span>Comedy</span>
-              <span>, Action</span>
-              <span>, Adventure</span>
+              {filmDetail.genres.map((item, index) => (
+                <span>{index === 0 ? item.name : `, ${item.name}`}</span>
+              ))}
             </p>
           </div>
           <div className={styles['desc-section']}>
@@ -42,46 +47,75 @@ export default function FilmInfo() {
                   Mua vé
                 </Button>
               </div>
-              <p className={styles['film-info__desc']}>
-                Cho Su Gwang là một thanh tra cực kỳ nóng tính, dù có tỷ lệ bắt giữ tội phạm ấn tượng nhưng anh luôn gặp
-                khó khăn trong việc kiểm soát cơn giận của mình. Vì liên tục tấn công các nghi phạm, Cho Su Gwang bị
-                chuyển đến đảo Jeju. Tại đây, vị thanh tra nhận nhiệm vụ truy bắt kẻ lừa đảo giỏi nhất Hàn Quốc - Kim In
-                Hae với 7 tiền án, nổi tiếng thông minh và có khả năng “thiên biến vạn hoá” để ngụy trang hoàn hảo mọi
-                nhân dạng. Cùng lúc đó, Kim In Hae bất ngờ dính vào vụ án mạng nghiêm trọng có liên quan đến tên trùm xã
-                hội đen đang nhăm nhe “thôn tính” đảo Jeju. Trước tình hình nguy cấp phải “giải cứu” hòn đảo Jeju và
-                triệt phá đường dây nguy hiểm của tên trùm xã hội đen, thanh tra Cho Su Gwang bất đắc dĩ phải hợp tác
-                cùng nghi phạm Kim In Hae, tận dụng triệt để các kỹ năng từ phá án đến lừa đảo trên hành trình rượt đuổi
-                vừa gay cấn vừa hài hước để có thể hoàn thành nhiệm vụ cam go.
-              </p>
+              <p className={styles['film-info__desc']}>{filmDetail.description}</p>
               <div className={styles['film-info__overview']}>
-                <InfoItem icon={<Icons.Calendar />} label="Khởi chiếu" value="13/09/2204" />
-                <InfoItem icon={<Icons.Clock />} label="Thời lượng" value="110 phút" />
-                <InfoItem icon={<Icons.UserCheck />} label="Giới hạn tuổi" value="T16" />
+                <InfoItem
+                  icon={<Icons.Calendar />}
+                  label="Khởi chiếu"
+                  value={dayjs(filmDetail.release_date).format('DD/MM/YYYY')}
+                />
+                <InfoItem icon={<Icons.Clock />} label="Thời lượng" value={`${filmDetail.duration} phút`} />
+                <InfoItem
+                  icon={<Icons.UserCheck />}
+                  label="Giới hạn tuổi"
+                  value={
+                    filmDetail.age_restricted > 0
+                      ? `T${filmDetail.age_restricted}`
+                      : filmDetail.age_restricted.toString()
+                  }
+                />
               </div>
             </div>
 
             <div className={styles['cast-crew-list']}>
-              <div className={styles['cast-crew']}>
-                <p className={styles['cast-crew__title']}>Dien vien</p>
-                <p className={styles['cast-crew__content']}>
-                  <span>Polina Avdeenko</span>,<span>Yuliya Rudina</span>,<span>Boris Khasanov</span>,
-                  <span>Yuliya Zorkina</span>
-                </p>
-              </div>
-              <div className={styles['cast-crew']}>
-                <p className={styles['cast-crew__title']}>Dao dien</p>
-                <p className={styles['cast-crew__content']}>
-                  <span>Polina Avdeenko</span>,<span>Yuliya Rudina</span>,<span>Boris Khasanov</span>,
-                  <span>Yuliya Zorkina</span>
-                </p>
-              </div>
-              <div className={styles['cast-crew']}>
-                <p className={styles['cast-crew__title']}>Nha san xuat</p>
-                <p className={styles['cast-crew__content']}>
-                  <span>Polina Avdeenko</span>,<span>Yuliya Rudina</span>,<span>Boris Khasanov</span>,
-                  <span>Yuliya Zorkina</span>
-                </p>
-              </div>
+              {filmDetail.actors.length > 0 && (
+                <div className={styles['cast-crew']}>
+                  <p className={styles['cast-crew__title']}>Diễn viên</p>
+                  <p className={styles['cast-crew__content']}>
+                    {filmDetail.actors.map((item, index) =>
+                      index === 0 ? (
+                        <span key={item.code}>{item.name}</span>
+                      ) : (
+                        <Fragment key={item.code}>
+                          , <span>{item.name}</span>
+                        </Fragment>
+                      ),
+                    )}
+                  </p>
+                </div>
+              )}
+              {filmDetail.directors.length > 0 && (
+                <div className={styles['cast-crew']}>
+                  <p className={styles['cast-crew__title']}>Đạo diễn</p>
+                  <p className={styles['cast-crew__content']}>
+                    {filmDetail.directors.map((item, index) =>
+                      index === 0 ? (
+                        <span key={item.code}>{item.name}</span>
+                      ) : (
+                        <Fragment key={item.code}>
+                          , <span>{item.name}</span>
+                        </Fragment>
+                      ),
+                    )}
+                  </p>
+                </div>
+              )}
+              {filmDetail.producers.length > 0 && (
+                <div className={styles['cast-crew']}>
+                  <p className={styles['cast-crew__title']}>Nhà sản xuất</p>
+                  <p className={styles['cast-crew__content']}>
+                    {filmDetail.producers.map((item, index) =>
+                      index === 0 ? (
+                        <span key={item.code}>{item.name}</span>
+                      ) : (
+                        <Fragment key={item.code}>
+                          , <span>{item.name}</span>
+                        </Fragment>
+                      ),
+                    )}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>

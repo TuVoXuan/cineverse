@@ -1,49 +1,68 @@
-import React, { useState } from 'react';
-import styles from './NavFilmInfo.module.scss';
-import Link from 'next/link';
 import clsx from 'clsx';
-
-interface NavItem {
-  key: string;
-  href: string;
-  label: string;
-  children: React.ReactNode;
-}
+import Link from 'next/link';
+import React from 'react';
+import styles from './NavFilmInfo.module.scss';
 
 interface Props {
-  items: NavItem[];
-  defaultTab: NavItem;
+  children: React.ReactNode;
+  defaultActiveNav: string;
 }
 
-export default function NavFilmInfo({ items, defaultTab }: Props) {
-  const [activeNav, setActiveNav] = useState<NavItem>(defaultTab);
-
-  const handleChangeTab = (nav: NavItem) => {
-    setActiveNav(nav);
-  };
-
+export function NavFilmInfo({ children, defaultActiveNav }: Props) {
   return (
     <>
       <div className={styles['nav-wrap']}>
         <div className="container">
           <ul className={styles['nav']}>
-            {items.map((item) => (
-              <li key={item.key} className={styles['nav__item']}>
-                <Link
-                  onClick={() => handleChangeTab(item)}
-                  href={item.href}
-                  className={clsx(styles['nav__link'], activeNav.key === item.key && styles['active'])}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {React.Children.map(children, (child, index) => {
+              if (React.isValidElement(child) && child.type === NavTrigger) {
+                return React.cloneElement(child as React.ReactElement<NavTriggerProps>, {
+                  className: defaultActiveNav === child.props.value ? styles['active'] : '',
+                });
+              }
+              return null;
+            })}
           </ul>
         </div>
       </div>
       <div className={styles['content-wrap']}>
-        <div className="container">{activeNav.children}</div>
+        {React.Children.map(children, (child) => {
+          if (React.isValidElement(child) && child.type === NavContent && defaultActiveNav === child.props.value) {
+            return React.cloneElement(child); // Show only active content
+          }
+          return null;
+        })}
       </div>
     </>
+  );
+}
+
+interface NavTriggerProps {
+  value: string;
+  href: string;
+  children: React.ReactNode;
+  className?: string;
+}
+
+export function NavTrigger({ value, href, children, className }: NavTriggerProps) {
+  return (
+    <li className={styles['nav__item']}>
+      <Link data-value={value} href={href} className={clsx(styles['nav__link'], className)}>
+        {children}
+      </Link>
+    </li>
+  );
+}
+
+interface NavContent {
+  value: string;
+  children: React.ReactNode;
+}
+
+export function NavContent({ value, children }: NavContent) {
+  return (
+    <div className="container" data-value={value}>
+      {children}
+    </div>
   );
 }

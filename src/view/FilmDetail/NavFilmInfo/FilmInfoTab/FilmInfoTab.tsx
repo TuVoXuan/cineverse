@@ -42,7 +42,11 @@ const articles = [
   },
 ];
 
-export default function FilmInfoTab() {
+interface Props {
+  trailer: string;
+}
+
+export default function FilmInfoTab({ trailer }: Props) {
   return (
     <div className={styles['wrap']}>
       <div className={styles['content-wrap']}>
@@ -50,7 +54,7 @@ export default function FilmInfoTab() {
           <iframe
             width="560"
             height="315"
-            src="https://www.youtube.com/embed/pfTzuEr13EQ?si=LksZrokXQ_Cc8TP8"
+            src={trailer}
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
