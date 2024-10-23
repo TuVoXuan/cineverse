@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ShowtimesTab.module.scss';
 import { Select } from 'antd';
 import WeekdayNavigator from '@/components/WeekdayNavigator/WeekdayNavigator';
@@ -39,6 +39,7 @@ export default function ShowtimesTab({filmCode}: Props) {
     try {
       const response = await regionApi.getAll();
       setProvinces(response.data.data.map((item) => ({label: item.name, value: item.code})));
+      setSelectedProvince(response.data.data[0].code);
     } catch (error) {
       console.log("error: ", error);
       toast.error((error as IRespondError)?.message);
@@ -47,11 +48,6 @@ export default function ShowtimesTab({filmCode}: Props) {
 
   useEffect(() => {
     fetchProvince();
-    if(navigator.geolocation){
-      navigator.geolocation.getCurrentPosition(function(pos) {
-        console.log("pos: ", pos);
-      })
-    }
   },[])
 
   useEffect(() => {
@@ -62,7 +58,7 @@ export default function ShowtimesTab({filmCode}: Props) {
     <div className={styles['wrap']}>
       <div className={styles['content-wrap']}>
         <div className={styles['form']}>
-          <Select className={styles['form__select']} options={provinces} onChange={handleChangeProvince} />
+          <Select className={styles['form__select']} options={provinces} value={selectedProvince} onChange={handleChangeProvince} />
         </div>
 
         <WeekdayNavigator

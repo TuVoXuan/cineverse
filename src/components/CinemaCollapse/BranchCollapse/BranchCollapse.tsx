@@ -5,42 +5,6 @@ import clsx from 'clsx';
 import ShowtimeSchedule from '@/components/Card/FilmShowtimes/ShowtimeSchedule/ShowtimeSchedule';
 import { AppPath } from '@/constants';
 import dayjs from 'dayjs';
-import { time } from 'console';
-
-const schedule = [
-  {
-    href: `${AppPath.BuyTicket}/1`,
-    time: dayjs('2024-10-01T14:00:00'),
-  },
-  {
-    href: `${AppPath.BuyTicket}/2`,
-    time: dayjs('2024-10-01T16:00:00'),
-  },
-  {
-    href: `${AppPath.BuyTicket}/3`,
-    time: dayjs('2024-10-02T18:00:00'),
-  },
-  {
-    href: `${AppPath.BuyTicket}/4`,
-    time: dayjs('2024-10-02T20:00:00'),
-  },
-  {
-    href: `${AppPath.BuyTicket}/5`,
-    time: dayjs('2024-10-03T14:30:00'),
-  },
-  {
-    href: `${AppPath.BuyTicket}/6`,
-    time: dayjs('2024-10-03T17:00:00'),
-  },
-  {
-    href: `${AppPath.BuyTicket}/7`,
-    time: dayjs('2024-10-04T19:00:00'),
-  },
-  {
-    href: `${AppPath.BuyTicket}/8`,
-    time: dayjs('2024-10-04T21:30:00'),
-  },
-];
 
 interface Props {
   id: number,

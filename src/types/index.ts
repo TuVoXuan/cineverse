@@ -17,5 +17,11 @@ export type SeatingLayout = {
 
 export type IOption = {
   label: string,
-  value: string
+  value: string,
+}
+
+export type IGroupOption = {
+  label: any,
+  title: string,
+  options: IOption[]
 }

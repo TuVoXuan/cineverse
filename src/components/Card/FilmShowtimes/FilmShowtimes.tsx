@@ -32,7 +32,7 @@ export default function FilmShowtimes({ showtimes }: props) {
   return (
     <div className={styles['film-showtimes']}>
       <div className={styles['film-showtimes__img-wrap']}>
-        <Link href={'#'}>
+        <Link href={`${AppPath.Film}/${showtimes.film.code}`}>
           <Image
             alt={showtimes.film.title}
             src={showtimes.film.thumbnail.url}
@@ -44,7 +44,9 @@ export default function FilmShowtimes({ showtimes }: props) {
       </div>
 
       <div className={styles['film-showtimes__schedule-wrap']}>
-        <h4 className={styles['film-showtimes__schedule-wrap__film-name']}>{showtimes.film.title}</h4>
+        <h4 className={styles['film-showtimes__schedule-wrap__film-name']}>
+          <Link href={`${AppPath.Film}/${showtimes.film.code}`}>{showtimes.film.title}</Link>
+        </h4>
         <MetaInfo info={metaInfo || []} textLinkColor="blue" className="mb-2" />
         {showtimes.showtimes.vietsub && (
           <ShowtimeSchedule

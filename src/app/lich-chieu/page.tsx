@@ -14,6 +14,7 @@ import { regionApi } from '@/api/region-api';
 import { cinemaApi } from '@/api/cinema-api';
 import { showtimesApi } from '@/api/showtimes-api';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { IGroupOption, IOption } from '@/types';
 dayjs.extend(customParseFormat);
 
 type CinemaBranchItem = ListItem & {
@@ -47,8 +48,10 @@ const cinemaBranchOptions = [
 ];
 
 export default function Showtimes() {
-  const [provinces, setProvinces] = useState<ListItem[]>();
-  const [cinemaBranches, setCinemaBranches] = useState<CinemaBranchItem[]>();
+  const [provinces, setProvinces] = useState<ListItem[]>([]);
+  const [cinemaBranches, setCinemaBranches] = useState<CinemaBranchItem[]>([]);
+  const [cinemaBranchesOptions, setCinemaBranchesOptions] = useState<IGroupOption[]>([]);
+  const [provinceOptions, setProvinceOptions] = useState<IOption[]>([]);
   const [activeProvince, setActiveProvince] = useState<ListItem>();
   const [activeCinemaBranch, setActiveCinemaBranch] = useState<CinemaBranchItem>();
   const [activeDate, setActiveDate] = useState<string>();
@@ -60,6 +63,18 @@ export default function Showtimes() {
   const handleChangeCinemaBranch = (item: CinemaBranchItem) => {
     setActiveCinemaBranch(item);
   };
+  const handleChangeProvinceOption = (value :string) => {
+    const province = provinces.find((item) => item.code === value);
+    if(province){
+      setActiveProvince(province);
+    }
+  }
+  const handleChangeCinemaBranchOption = (value :string) => {
+    const cinemaBranch = cinemaBranches.find((item) => item.code === value);
+    if(cinemaBranch){
+      setActiveCinemaBranch(cinemaBranch);
+    }
+  }
 
   async function fetchProvinces() {
     try {
@@ -82,6 +97,7 @@ export default function Showtimes() {
       } as ListItem);
 
       setProvinces(provincesList);
+      setProvinceOptions(response.data.data.map((item) => ({label: item.name, value: item.code})));
     } catch (error: any) {
       toast.error(error?.message);
     }
@@ -108,6 +124,12 @@ export default function Showtimes() {
           })),
         );
       });
+
+      setCinemaBranchesOptions(response.data.map((item) => ({
+        label: <span>{item.name}</span>,
+        title: item.name,
+        options: item.branches.map((branch) => ({ label: branch.name, value: branch.code}))
+      })))
       setActiveCinemaBranch(branchesList[1]);
       setCinemaBranches(branchesList);
     } catch (error) {
@@ -153,12 +175,14 @@ export default function Showtimes() {
           <Select
             className={styles['showtimes__cinema-branch-form__select']}
             options={provinceOptions}
-            onChange={handleChangeProvince}
+            onChange={handleChangeProvinceOption}
+            value={activeProvince?.code}
           />
           <Select
             className={styles['showtimes__cinema-branch-form__select']}
-            options={cinemaBranchOptions}
-            onChange={handleChangeCinemaBranch}
+            options={cinemaBranchesOptions}
+            onChange={handleChangeCinemaBranchOption}
+            value={activeCinemaBranch?.code}
           />
         </div>
         <div className={styles.provinces}>

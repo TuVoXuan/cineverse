@@ -26,7 +26,7 @@ export default function DropDownMenu({ title, items, className, isPopup }: props
   useClickOutside(ref, () => setShow(false));
 
   return (
-    <div ref={ref} className={clsx(isPopup && 'relative')}>
+    <div ref={ref} className={clsx(isPopup && 'relative')} style={{zIndex: 10}}>
       <div className={clsx(className, styles['dropdown-menu'])} onClick={onToggleShow}>
         <a href="#">{title}</a>
         <span>

@@ -29,6 +29,10 @@
       font-size: 15px;
       margin-bottom: 3px;
       font-weight: 600;
+
+      :hover {
+        color: variables.$blue-600;
+      }
     }
     @include respond-to(xl) {
       grid-column: span 10 / span 10;

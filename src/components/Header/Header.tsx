@@ -5,6 +5,8 @@ import Icons from '../Icons';
 import clsx from 'clsx';
 import DropDownMenu from '../DropdownMenu/DropDownMenu';
 import useResponsive from '@/hooks/useResponsive';
+import { AppPath } from '@/constants';
+import Link from 'next/link';
 
 const menuList = [
   {
@@ -13,7 +15,7 @@ const menuList = [
   },
   {
     title: 'Lịch chiếu',
-    href: '#',
+    href: AppPath.Showtimes,
   },
   {
     title: 'Phim',
@@ -104,9 +106,9 @@ export default function Header() {
                 );
               }
               return (
-                <div key={item.title} className={styles['nav-menu__item']}>
+                <Link href={item.href} key={item.title} className={styles['nav-menu__item']}>
                   {item.title}
-                </div>
+                </Link>
               );
             })}
           </div>
@@ -142,9 +144,9 @@ export default function Header() {
               );
             }
             return (
-              <div key={item.title} className={styles['nav-menu__item']}>
+              <Link href={item.href} key={item.title} className={styles['nav-menu__item']}>
                 {item.title}
-              </div>
+              </Link>
             );
           })}
         </div>
