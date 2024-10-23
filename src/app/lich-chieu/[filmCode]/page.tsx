@@ -14,30 +14,6 @@ export default function FilmDetail() {
   const [filmDetail, setFilmDetail] = useState<IFilmDetail>();
   const params = useParams<{ filmCode: string }>();
 
-  const navItems = useMemo(
-    () => [
-      {
-        key: 'thong-tin-phim',
-        label: 'Thông tin phim',
-        href: `${AppPath.Film}/${params.filmCode}`,
-        children: <FilmInfoTab trailer="" />,
-      },
-      {
-        key: 'lich-chieu',
-        label: 'Lịch chiếu',
-        href: `${AppPath.Showtimes}/${params.filmCode}`,
-        children: <ShowtimesTab />,
-      },
-      {
-        key: 'danh-gia',
-        label: 'Đánh giá',
-        href: `${AppPath.Review}/${params.filmCode}`,
-        children: <CommentTab />,
-      },
-    ],
-    [params.filmCode],
-  );
-
   const fetchFilmDetail = async () => {
     try {
       const respond = await filmApi.getFilmDetail(params.filmCode);
@@ -66,14 +42,8 @@ export default function FilmDetail() {
           Đánh giá
         </NavTrigger>
 
-        <NavContent value={'thong-tin-phim'}>
-          <FilmInfoTab trailer={filmDetail ? filmDetail.trailer.replace('watch?v=', 'embed/') : ''} />
-        </NavContent>
         <NavContent value={'lich-chieu'}>
-          <ShowtimesTab />
-        </NavContent>
-        <NavContent value={'danh-gia'}>
-          <CommentTab />
+          <ShowtimesTab filmCode={params.filmCode}/>
         </NavContent>
       </NavFilmInfo>
     </Fragment>

@@ -1,3 +1,8 @@
+declare interface IShowTimeItem {
+    id: number,
+    screening_time: string
+}
+
 declare interface IShowtime {
     film: {
         id: number,
@@ -21,4 +26,26 @@ declare interface IShowtime {
             screening_time: string
         }[]
     }
+}
+
+declare interface IShowtimeForFilm {
+    company: {
+        id: number,
+        name: string,
+        logo: {
+            id: number,
+            url: string
+        }
+    },
+    branches: {
+        id: number,
+        name: string,
+        address: string,
+        region_id: number,
+        code: string,
+        showtimes: {
+            vietsub: IShowTimeItem[],
+            voiceover: IShowTimeItem[]
+        }
+    }[]
 }

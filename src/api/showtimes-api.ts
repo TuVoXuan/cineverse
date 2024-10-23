@@ -12,5 +12,9 @@ export const showtimesApi = {
     getSeatLayoutForShowtime: async (showtime: string) => {
         const response = await axiosService.get<IRespondSuccess<ISeatLayoutForShowtime>>(`${URL}/${showtime}/seating-arrangement`);
         return response.data;
+    },
+    getShowtimesByFilmCode: async (filmCode: string, provinceCode: string, date: string) => {
+        const response = await axiosService.get<IRespondSuccess<IShowtimeForFilm[]>>(`${URL}/${filmCode}?province=${provinceCode}&date=${date}`);
+        return response.data;
     }
 }

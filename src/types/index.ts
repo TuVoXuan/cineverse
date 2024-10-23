@@ -7,10 +7,15 @@ export type TicketingStep = {
 export interface ISeat {
   id?: number;
   isSelected?: boolean;
-  seatLabel: string|null;
+  seatLabel: string | null;
   type: string;
 }
 
 export type SeatingLayout = {
   [row: string]: ISeat[];
 };
+
+export type IOption = {
+  label: string,
+  value: string
+}
