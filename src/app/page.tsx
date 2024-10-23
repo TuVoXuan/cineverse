@@ -230,7 +230,7 @@ export default function Home() {
               Sắp chiếu
             </a>
           </div>
-          <div className={styles['showing-film-container__swiper']}>
+          {/* <div className={styles['showing-film-container__swiper']}>
             <Swiper
               pagination={true}
               mousewheel={true}
@@ -287,7 +287,7 @@ export default function Home() {
                 <FilmCard />
               </SwiperSlide>
             </Swiper>
-          </div>
+          </div> */}
         </div>
       </div>
       {/* Articles */}

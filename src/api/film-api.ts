@@ -8,5 +8,9 @@ export const filmApi = {
     getFilmDetail: async (filmCode: string) => {
         const response = await axiosService.get<IRespondSuccess<IFilmDetail>>(`${URL}/${filmCode}`);
         return response.data;
+    },
+    getFilmsShowing: async () => {
+        const response = await axiosService.get<IRespondSuccess<IShortFilmInfo[]>>(`${URL}/showing`);
+        return response.data;
     }
 }

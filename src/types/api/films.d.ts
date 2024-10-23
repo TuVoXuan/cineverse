@@ -12,10 +12,9 @@ declare interface IFilmGenre extends ITimestamped {
     }
 }
 
-declare interface IFilmArtist extends ITimestamped
-{
+declare interface IFilmArtist extends ITimestamped {
     name: string,
-    biography: string|null,
+    biography: string | null,
     birthday: string | null,
     code: string,
     pivot: {
@@ -24,7 +23,7 @@ declare interface IFilmArtist extends ITimestamped
     }
 }
 
-declare interface IFilmDetail extends ITimestamped{
+declare interface IFilmDetail extends ITimestamped {
     release_date: string,
     duration: number,
     age_restricted: number,
@@ -38,4 +37,15 @@ declare interface IFilmDetail extends ITimestamped{
     directors: IFilmArtist[],
     producers: IFilmArtist[],
     actors: IFilmArtist[],
+}
+
+declare interface IShortFilmInfo {
+    id: number,
+    release_date: string,
+    thumbnail: {
+        id: number,
+        url: string
+    },
+    title: string,
+    code: string
 }

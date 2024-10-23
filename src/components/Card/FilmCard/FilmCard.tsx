@@ -2,8 +2,16 @@ import React from 'react';
 import Image from 'next/image';
 import styles from './FilmCard.module.scss';
 import Icons from '@/components/Icons';
+import Link from 'next/link';
+import { AppPath } from '@/constants';
+import dayjs from 'dayjs';
 
-export default function FilmCard() {
+interface Props {
+  film: IShortFilmInfo
+  hasByTicket?: boolean
+}
+
+export default function FilmCard({film, hasByTicket}: Props) {
   return (
     <div className={styles['film-card']}>
       {/* <span className={styles['sprite']}>
@@ -17,19 +25,19 @@ export default function FilmCard() {
           <Icons.Star className={styles['btn-group__button__icon']} />
         </button>
       </div> */}
-      <a className={styles['film-card__img-container']} href="#" title="Đẹp trai thấy sai sai">
+      <Link className={styles['film-card__img-container']} href={`${AppPath.Showtimes}/${film.code}`} title={film.code}>
         <Image
-          src={'https://cdn.moveek.com/storage/media/cache/tall/66ab4092261e7067687988.jpg'}
-          alt="film-img"
+          src={film.thumbnail.url}
+          alt={film.code}
           width={100}
           height={100}
           className={styles['film-card__img-container__img']}
         />
-        <label className={styles['film-card__buy-ticket']}>Mua vé</label>
-      </a>
+        {hasByTicket && <label className={styles['film-card__buy-ticket']}>Mua vé</label>}
+      </Link>
       <div className={styles['film-card__info']}>
-        <h4 className={styles['film-card__info__film-name']}>Đẹp trai thấy sai sai sai sai sai sai sai sai sai</h4>
-        <span className={styles['film-card__info__released-date']}>09/08</span>
+        <h4 className={styles['film-card__info__film-name']}>{film.title}</h4>
+        <span className={styles['film-card__info__released-date']}>{dayjs(film.release_date).format('DD/MM')}</span>
       </div>
     </div>
   );
