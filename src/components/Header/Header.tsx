@@ -106,9 +106,9 @@ export default function Header() {
                 );
               }
               return (
-                <Link href={item.href} key={item.title} className={styles['nav-menu__item']}>
-                  {item.title}
-                </Link>
+                <div key={item.title} className={styles['nav-menu__item']}>
+                  <Link href={item.href}>{item.title}</Link>
+                </div>
               );
             })}
           </div>
@@ -146,9 +146,9 @@ export default function Header() {
               );
             }
             return (
-              <Link href={item.href} key={item.title} className={styles['nav-menu__item']}>
-                {item.title}
-              </Link>
+              <div key={item.title} className={styles['nav-menu__item']}>
+                <Link href={item.href}>{item.title}</Link>
+              </div>
             );
           })}
         </div>

@@ -3,6 +3,7 @@ import styles from './DropdownMenu.module.scss';
 import Icons from '../Icons';
 import clsx from 'clsx';
 import { useClickOutside } from '@/hooks/useClickOutside';
+import Link from 'next/link';
 
 type props = {
   items: {
@@ -28,7 +29,7 @@ export default function DropDownMenu({ title, items, className, isPopup }: props
   return (
     <div ref={ref} className={clsx(isPopup && 'relative')} style={{zIndex: 10}}>
       <div className={clsx(className, styles['dropdown-menu'])} onClick={onToggleShow}>
-        <a href="#">{title}</a>
+        <span>{title}</span>
         <span>
           <Icons.ArrowDown height={16} width={16} />
         </span>
@@ -37,7 +38,7 @@ export default function DropDownMenu({ title, items, className, isPopup }: props
         <ul className={clsx(isPopup && styles['dropdown-menu__item-wrapper'])}>
           {items.map((item) => (
             <li key={item.label} className={styles['dropdown-menu__item']}>
-              <a href={item.href}>{item.label}</a>
+              <Link href={item.href}>{item.label}</Link>
             </li>
           ))}
         </ul>
