@@ -22,7 +22,7 @@ const menuList = [
     items: [
       {
         label: 'Đang chiếu',
-        href: '#',
+        href: AppPath.Showing,
       },
       {
         label: 'Sắp chiếu',
@@ -114,7 +114,9 @@ export default function Header() {
           </div>
         </div>
 
-        <h1 className={styles.header__title}>Cineverse</h1>
+        <h1 className={styles.header__title}>
+          <Link href={AppPath.Home}>Cineverse</Link>
+        </h1>
 
         <div className={styles['header__left-icons']}>
           <div className={styles['header__icon-wrapper']}>
