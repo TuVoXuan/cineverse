@@ -5,13 +5,15 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination, Mousewheel } from 'swiper/modules';
-import { Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import styles from './HomePage.module.scss';
 import clsx from 'clsx';
 import HotArticle from '@/components/Card/Article/HotArticle/HotArticle';
 import ArticleInfo from '@/components/Card/Article/ArticleInfo/ArticleInfo';
 import MediumArticle from '@/components/Card/Article/MediumArticle/MediumArticle';
 import Review from '@/components/Card/Article/Review/Review';
+import { filmApi } from '@/api/film-api';
+import toast from 'react-hot-toast';
 
 const otherHotArticle = [
   {
@@ -218,6 +220,22 @@ const reviews = [
 ];
 
 export default function Home() {
+  const [films, setFilms] = useState<IShortFilmInfo[]>([]);
+
+  async function fetchFilmsShowing() {
+    try {
+      const response = await filmApi.getFilmsShowing();
+      setFilms(response.data);
+    } catch (error) {
+      console.log('error: ', error);
+      toast.error((error as IRespondError)?.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchFilmsShowing();
+  }, []);
+
   return (
     <Fragment>
       {/* Film is showing swiper */}
@@ -225,12 +243,8 @@ export default function Home() {
         <div className="container">
           <div className={styles['showing-film-container__titles']}>
             <a href="#">Đang chiếu</a>
-            <span>|</span>
-            <a href="#" className={styles['showing-film-container__titles__inactive']}>
-              Sắp chiếu
-            </a>
           </div>
-          {/* <div className={styles['showing-film-container__swiper']}>
+          <div className={styles['showing-film-container__swiper']}>
             <Swiper
               pagination={true}
               mousewheel={true}
@@ -250,44 +264,13 @@ export default function Home() {
                 },
               }}
             >
-              <SwiperSlide>
-                <FilmCard />
-              </SwiperSlide>
-              <SwiperSlide>
-                <FilmCard />
-              </SwiperSlide>
-              <SwiperSlide>
-                <FilmCard />
-              </SwiperSlide>
-              <SwiperSlide>
-                <FilmCard />
-              </SwiperSlide>
-              <SwiperSlide>
-                <FilmCard />
-              </SwiperSlide>
-              <SwiperSlide>
-                <FilmCard />
-              </SwiperSlide>
-              <SwiperSlide>
-                <FilmCard />
-              </SwiperSlide>
-              <SwiperSlide>
-                <FilmCard />
-              </SwiperSlide>
-              <SwiperSlide>
-                <FilmCard />
-              </SwiperSlide>
-              <SwiperSlide>
-                <FilmCard />
-              </SwiperSlide>
-              <SwiperSlide>
-                <FilmCard />
-              </SwiperSlide>
-              <SwiperSlide>
-                <FilmCard />
-              </SwiperSlide>
+              {films.map((film) => (
+                <SwiperSlide key={film.id}>
+                  <FilmCard film={film} />
+                </SwiperSlide>
+              ))}
             </Swiper>
-          </div> */}
+          </div>
         </div>
       </div>
       {/* Articles */}

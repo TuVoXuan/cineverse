@@ -11,10 +11,6 @@ import dayjs from 'dayjs';
 
 const menuList = [
   {
-    title: 'Đặt vé xem phim',
-    href: '#',
-  },
-  {
     title: 'Lịch chiếu',
     href: AppPath.Showtimes,
   },
@@ -26,20 +22,8 @@ const menuList = [
         href: AppPath.Showing,
       },
       {
-        label: 'Sắp chiếu',
-        href: '#',
-      },
-      {
-        label: 'Chiếu sớm',
-        href: '#',
-      },
-      {
         label: `Phim tháng ${dayjs().month() + 1}/${dayjs().year()}`,
         href: `/phim-thang/${dayjs().month() + 1}/${dayjs().year()}`,
-      },
-      {
-        label: 'Phim Việt Nam',
-        href: '#',
       },
     ],
   },
