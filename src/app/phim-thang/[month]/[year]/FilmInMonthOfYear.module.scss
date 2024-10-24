@@ -1,0 +1,38 @@
+@use '../../../../styles/variables.scss';
+@import '../../../../styles/responsive.scss';
+
+.banner {
+  color: variables.$white;
+  background-image: url('../../../../assets/images/showtimes-banner.png');
+  background-size: cover;
+  background-position: 50% 50%;
+  text-align: center;
+  &__title {
+    font-weight: 700;
+    font-size: 26px;
+    margin-bottom: 12px;
+  }
+  &__description {
+    font-size: 15px;
+  }
+  @include respond-to(xl) {
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.film-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  padding-top: 20px;
+  padding-bottom: 50px;
+
+  @include respond-to(sm) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  @include respond-to(lg) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}

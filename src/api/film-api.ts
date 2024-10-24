@@ -12,5 +12,9 @@ export const filmApi = {
     getFilmsShowing: async () => {
         const response = await axiosService.get<IRespondSuccess<IShortFilmInfo[]>>(`${URL}/showing`);
         return response.data;
+    },
+    getFilmsShowingInMonthOfYear: async (month: number, year: number) => {
+        const response = await axiosService.get<IRespondSuccess<IShortFilmInfo[]>>(`${URL}/showing/${month}/${year}`);
+        return response.data;
     }
 }

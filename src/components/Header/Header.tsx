@@ -7,6 +7,7 @@ import DropDownMenu from '../DropdownMenu/DropDownMenu';
 import useResponsive from '@/hooks/useResponsive';
 import { AppPath } from '@/constants';
 import Link from 'next/link';
+import dayjs from 'dayjs';
 
 const menuList = [
   {
@@ -33,8 +34,8 @@ const menuList = [
         href: '#',
       },
       {
-        label: 'Phim tháng 9/2024',
-        href: '#',
+        label: `Phim tháng ${dayjs().month() + 1}/${dayjs().year()}`,
+        href: `/phim-thang/${dayjs().month() + 1}/${dayjs().year()}`,
       },
       {
         label: 'Phim Việt Nam',
