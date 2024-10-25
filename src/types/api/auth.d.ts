@@ -14,3 +14,10 @@ declare interface ILogin {
     user: IUser,
     token: string
 }
+
+declare interface IRegisterBody {
+    email: string,
+    account: string,
+    password: string,
+    phone: string
+}

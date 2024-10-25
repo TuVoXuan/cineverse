@@ -188,7 +188,6 @@ export default function Header() {
       <Drawer
         title="Đăng nhập"
         placement="left"
-        closable={false}
         onClose={() => setShowSignUpForm(false)}
         open={showSignUpForm}
         key="left"
@@ -221,6 +220,13 @@ export default function Header() {
             Đăng nhập
           </Button>
         </form>
+
+        <p className="text-[14px] text-gray-500 text-center mt-6">
+          chưa có tài khoản?{' '}
+          <Link className="text-blue-500" href={AppPath.Register}>
+            Đăng ký ngay
+          </Link>
+        </p>
       </Drawer>
     </section>
   );

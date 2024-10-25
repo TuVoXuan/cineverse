@@ -8,5 +8,9 @@ export const authApi = {
             account, password
         });
         return response.data;
-    }
+    },
+    register: async (body: IRegisterBody) => {
+			const response = await axiosService.post<IRespondSuccess<string>>(`${API_URL}/sign-up`, body);
+			return response.data;
+		}
 }

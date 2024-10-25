@@ -14,6 +14,7 @@ export const AppPath = {
   Review: '/review',
   Showing: '/dang-chieu',
   FilmMonth: '/phim-thang',
+  Register: '/dang-ky',
 };
 
 export const EmailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
