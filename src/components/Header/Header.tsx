@@ -5,9 +5,20 @@ import Icons from '../Icons';
 import clsx from 'clsx';
 import DropDownMenu from '../DropdownMenu/DropDownMenu';
 import useResponsive from '@/hooks/useResponsive';
-import { AppPath } from '@/constants';
+import { AppPath, PasswordRegex } from '@/constants';
 import Link from 'next/link';
 import dayjs from 'dayjs';
+import { Button, Drawer, Input } from 'antd';
+import { Controller, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Typography } from 'antd';
+import toast from 'react-hot-toast';
+import { authApi } from '@/api/auth-api';
+import { useAppDispatch } from '@/lib/hook';
+import { login } from '@/lib/features/user/userAction';
+
+const { Text } = Typography;
 
 const menuList = [
   {
@@ -50,9 +61,44 @@ const menuList = [
   },
 ];
 
+interface ILoginForm {
+  account: string;
+  password: string;
+}
+
 export default function Header() {
   const [showMenu, setShowMenu] = useState(false);
+  const [showSignUpForm, setShowSignUpForm] = useState<boolean>(false);
   const screenSize = useResponsive();
+  const dispatch = useAppDispatch();
+
+  const schema = yup.object().shape({
+    account: yup.string().required(),
+    password: yup
+      .string()
+      .matches(
+        PasswordRegex,
+        'Mật khẩu phải chứa ít nhất 8 kí tự và có it nhất 1 in hoa, 1 in thường, 1 chữ số, 1 kí tự đặc biệt',
+      )
+      .required(),
+  });
+
+  const { control, handleSubmit } = useForm<ILoginForm>({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = async (value: ILoginForm) => {
+    try {
+      const response = await dispatch(login(value)).unwrap();
+      if (response?.token) {
+        setShowSignUpForm(false);
+        toast.success('Đăng nhập thành công.');
+      }
+    } catch (error) {
+      console.log('error: ', error);
+      toast.error((error as IRespondError)?.message);
+    }
+  };
 
   const handleShowMenu = () => {
     setShowMenu(!showMenu);
@@ -111,7 +157,7 @@ export default function Header() {
             <Icons.QuestionMarkCircle className={styles.header__icon} />
             <span className={styles['show_label']}>Hỗ trợ</span>
           </div>
-          <div className={styles['header__icon-wrapper']}>
+          <div className={styles['header__icon-wrapper']} onClick={() => setShowSignUpForm(true)}>
             <Icons.User className={styles.header__icon} />
           </div>
         </div>
@@ -138,6 +184,44 @@ export default function Header() {
           })}
         </div>
       </div>
+
+      <Drawer
+        title="Đăng nhập"
+        placement="left"
+        closable={false}
+        onClose={() => setShowSignUpForm(false)}
+        open={showSignUpForm}
+        key="left"
+      >
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Controller
+            name="account"
+            control={control}
+            render={({ field, formState: { errors } }) => (
+              <div className="mb-3">
+                <label>Tài khoản</label>
+                <Input {...field} status={errors.account && 'error'} placeholder="Nhập tài khoản" />
+                {errors.account && <Text type="danger">{errors.account.message}</Text>}
+              </div>
+            )}
+          />
+          <Controller
+            name="password"
+            control={control}
+            render={({ field, formState: { errors } }) => (
+              <div className="mb-5">
+                <label>Mật khẩu</label>
+                <Input {...field} type="password" status={errors.password && 'error'} placeholder="Nhập mật khẩu" />
+                {errors.password && <Text type="danger">{errors.password.message}</Text>}
+              </div>
+            )}
+          />
+
+          <Button htmlType="submit" type="primary" className="w-full">
+            Đăng nhập
+          </Button>
+        </form>
+      </Drawer>
     </section>
   );
 }

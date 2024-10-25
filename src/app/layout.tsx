@@ -4,6 +4,7 @@ import './globals.css';
 import PageLayout from '@/components/Layout/PageLayout';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { Toaster } from 'react-hot-toast';
+import StoreProvider from './StoreProvider';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -21,7 +22,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={montserrat.className}>
         <AntdRegistry>
-          <PageLayout>{children}</PageLayout>
+          <StoreProvider>
+            <PageLayout>{children}</PageLayout>
+          </StoreProvider>
         </AntdRegistry>
         <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
       </body>
